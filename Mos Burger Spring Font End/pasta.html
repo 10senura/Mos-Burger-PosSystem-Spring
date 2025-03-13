@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pasta Management</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="pasta.js"></script>
+    <style>
+        .container {
+            display: flex;
+        }
+        .sidebar {
+            margin-right: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .controls {
+            margin-top: 20px;
+        }
+        .controls input {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+     
+        </div>
+
+        <div>
+            <div class="controls">
+                <input type="text" id="searchInput" placeholder="Search Pasta..." onkeyup="searchPasta()">
+                <input type="text" id="pastaName" placeholder="Pasta Name">
+                <input type="number" id="pastaPrice" placeholder="Price">
+                <input type="text" id="pastaImage" placeholder="Image URL">
+                <button onclick="addPasta()">Add Pasta</button>
+            </div>
+
+            <table id="pastaTable">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Image</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const baseURL = 'http://localhost:8080/pasta';
+
+        function navigateTo(page) {
+            window.location.href = page;
+        }
+
+        async function loadAllPasta() {
+            try {
+                const response = await fetch(`${baseURL}/allPasta`);
+                const pastas = await response.json();
+                renderTable(pastas);
+            } catch (error) {
+                console.error('Error loading pastas:', error);
+            }
+        }
+
+        function renderTable(pastas) {
+            const tableBody = document.querySelector('#pastaTable tbody');
+            tableBody.innerHTML = '';
+
+            pastas.forEach(pasta => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${pasta.name}</td>
+                    <td>Rs.${pasta.price}</td>
+                    <td><img src="${pasta.image_url}" alt="${pasta.name}" height="50"></td>
+                    <td>
+                        <button onclick="deletePasta('${pasta.id}')">Delete</button>
+                        <button onclick="updatePasta('${pasta.id}')">Update</button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        async function addPasta() {
+            const name = document.getElementById('pastaName').value;
+            const price = document.getElementById('pastaPrice').value;
+            const imageUrl = document.getElementById('pastaImage').value;
+
+            try {
+                await fetch(`${baseURL}/addPasta`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, price, image_url: imageUrl })
+                });
+                loadAllPasta();
+            } catch (error) {
+                console.error('Error adding pasta:', error);
+            }
+        }
+
+        async function deletePasta(id) {
+            try {
+                await fetch(`${baseURL}/deletePasta/${id}`, { method: 'DELETE' });
+                loadAllPasta();
+            } catch (error) {
+                console.error('Error deleting pasta:', error);
+            }
+        }
+
+        async function searchPasta() {
+            const searchInput = document.getElementById('searchInput').value.toLowerCase();
+            try {
+                const response = await fetch(`${baseURL}/searchPasta?name=${searchInput}`);
+                const pastas = await response.json();
+                renderTable(pastas);
+            } catch (error) {
+                console.error('Error searching pastas:', error);
+            }
+        }
+
+        window.onload = loadAllPasta;
+    </script>
+</body>
+</html>

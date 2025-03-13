@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Ordering System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="logo">
+                <img src="img/logo.png" alt="Logo">
+            </div>
+            <div class="menu">
+                <a class="menu-item" onclick="showItems('burger')"><i class="home-icon"></i></a>
+                <a class="menu-item" onclick="showItems(window.location.href='burgermanage.html')"><i class="food-icon"></i></a>
+                <a class="menu-item" onclick="pasta.html"><i class="table-icon"></i></a> 
+                <a href="#" class="menu-item"><i class="chart-icon"></i></a>
+                <a href="#" class="menu-item"><i class="logout-icon"></i></a> 
+
+            </div>
+        </div>
+        <div class="main">
+            <div class="content">
+                <div class="header">
+                    <input 
+                        type="text" 
+                        placeholder="Search Name" 
+                        class="search-bar" 
+                        id="search-bar" 
+                        onkeyup="searchItems()"/>
+                    <div class="user-options">
+                    </div>
+                </div>
+                
+                <div class="categories">
+                    <button class="category-btn" onclick="showItems('burger')">Burger</button>
+                    <button class="category-btn" onclick="showItems(window.location.href='pasta.html')">Pasta</button>
+                    <button class="category-btn" onclick="showItems('Fries')">Fries</button>
+                    <button class="category-btn" onclick="showItems('submarine')">Submarine</button>
+                    <button class="category-btn" onclick="showItems('Chiken')">Chiken</button>
+                    <button class="category-btn" onclick="showItems('Bevarages')">Bevarages</button>
+                    <button class="category-btn" onclick="showItems(window.location.href='burgermanage.html')">All list</button>
+
+                </div>
+                <div id="itemmenu" class="items" >
+
+                    <!-- Update Pasta Form -->
+<div id="updateForm" style="display: none;">
+    <h2>Update Pasta</h2>
+    <input type="hidden" id="updatePastaId">
+    <label for="updateItemName">Name:</label>
+    <input type="text" id="updateItemName"><br><br>
+
+    <label for="updateItemPrice">Price:</label>
+    <input type="number" id="updateItemPrice"><br><br>
+
+    <label for="updateItemImg">Image URL:</label>
+    <input type="text" id="updateItemImg"><br><br>
+
+    <button onclick="updatePasta()">Save Changes</button>
+</div>
+
+                    
+                  <!-- item add area -->    
+                  <div class="itemaddarea visible" id="itemaddarea">
+                   <p><b>Click this Add button to Add Item to the MoS burger Shop</b></p>
+                   <button class="add-btn" id="add-item-button" onclick="showAddItemModal()">Add Item</button>
+                   </div>
+
+                    <div class="item visible burger">
+                        <img src="img/burger/baken burger.jpeg" alt="MOS Special Submarine">
+                        <p>Classic Burger (Large) - Rs.750.00</p>
+                        <button class="add-btn" onclick="addToCart('Classic Burger (Large) Rs. 750.00',750)">Add</button>
+                    </div>
+                    <div class="item visible burger">
+                        <img src="img/burger/cheese burger.jpeg" alt="Classic Burger (Large)">
+                        <p>Classic Burger (Regular) - Rs. 1500.00 </p>
+                        <button class="add-btn"onclick="addToCart('Classic Burger (Regular) Rs. 1500.00',1500)">Add</button>
+                    </div>
+                    <div class="item visible burger">
+                        <img src="img/burger/Cheese Submarine.jpeg" alt="Chicken Burger (Large)">
+                        <p> Turkey Burger (Regular) - Rs. 1600.00 </p>
+                        <button class="add-btn"onclick="addToCart('Turkey Burger (Regular) Rs. 1600.00',1600)">Add</button>
+                    </div>
+                    <div class="item visible burger">
+                        <img src="img/burger/Chicken Submarine.jpeg" alt="Another Item">
+                        <p>Chicken Burger (Large) - Rs. 800.00 </p>
+                        <button class="add-btn"onclick="addToCart('Chicken Burger (Large) Rs. 800.00',800)">Add</button>
+                    </div>
+                    <div class="item visible burger">
+                        <img src="img/burger/chicken-burger.jpg" alt="Another Item">
+                        <p>Cheese Burger (Large) - Rs. 1000.00 </p>
+                        <button class="add-btn"onclick="addToCart('Cheese Burger (Large) Rs. 1000.00',1000)">Add</button>
+                    </div>
+                    <div class="item visible burger">
+                        <img src="img/burger/chicken-burgers- large.jpg" alt="Another Item">
+                        <p>Cheese Burger (Regular) - Rs. 600.00 </p>
+                        <button class="add-btn"onclick="addToCart('Cheese Burger (Regular) Rs. 600.00',600)">Add</button>
+                    </div>
+                    <div class="item visible burger">
+                        <img src="img/burger/classic burger new.jpeg" alt="Another Item">
+                        <p>Bacon Burger (Regular) - Rs. 650.00 </p>
+                        <button class="add-btn"onclick="addToCart('Bacon Burger (Regular) Rs. 650.00',650)">Add</button>
+                    </div>
+                    <div class="item visible burger">
+                        <img src="img/burger/classic burger small.webp" alt="Another Item">
+                        <p>Shawarma Burger  - Rs. 800.00 </p>
+                        <button class="add-btn"onclick="addToCart('Shawarma Burger Rs. 800.00',800)">Add</button>
+                    </div>
+
+                    <div class="item visible burger">
+                        <img src="img/burger/crisphy chicken burger.jpeg" alt="MOS Special Submarine">
+                        <p>Olive Burger (Regular) - Rs. 1800.00 </p>
+                        <button class="add-btn"onclick="addToCart('Olive Burger (Regular) Rs. 1800.00',1800)">Add</button>
+                    </div>
+                    <div class="item visible burger">
+                        <img src="img/burger/Crispy Chicken Submarine.jpeg" alt="Classic Burger (Large)">
+                        <p>Double-Cheese Burger - Rs. 1250.00 </p>
+                        <button class="add-btn"onclick="addToCart('Double-Cheese Burger Rs. 1250.00',1250)">Add</button>
+                    </div>
+                    <div class="item visible burger">
+                        <img src="img/burger/double cheese burger.jpeg" alt="Chicken Burger (Large)">
+                        <p>Crispy Chicken Burger (Regular) - Rs. 1200.00 </p>
+                        <button class="add-btn"onclick="addToCart('Crispy Chicken Burger (Regular) Rs. 1200.00',1200)">Add</button>
+                    </div>
+                    <div class="item visible burger">
+                        <img src="img/burger/Double Cheese n Chicken Submarine.jpeg" alt="Another Item">
+                        <p>Crispy Chicken Burger (Large) - Rs. 1600.00 </p>
+                        <button class="add-btn"onclick="addToCart('Crispy Chicken Burger (Large) Rs. 1600.00',1600)">Add</button>
+                    </div>
+                    <div class="item visible burger">
+                        <img src="img/burger/Crispy Chicken Submarine.jpeg" alt="Classic Burger (Large)">
+                        <p>Double-Cheese Burger - Rs. 1250.00 </p>
+                        <button class="add-btn"onclick="addToCart('Double-Cheese Burger Rs. 1250.00',1250)">Add</button>
+                    </div>
+                    <div class="item visible burger">
+                        <img src="img/burger/double cheese burger.jpeg" alt="Chicken Burger (Large)">
+                        <p>Paneer Burger - Rs. 900.00 </p>
+                        <button class="add-btn"onclick="addToCart('Paneer Burger  Rs. 900.00',900)">Add</button>
+                    </div>
+                    <div class="item visible burger">
+                        <img src="img/burger/Double Cheese n Chicken Submarine.jpeg" alt="Another Item">
+                        <p>Crispy Chicken Burger (Large) - Rs. 1500.00 </p>
+                        <button class="add-btn"onclick="addToCart('Classic Burger (Regular) Rs. 1500.00',1500)">Add</button>
+                    </div>
+                    <!-- end burger items -->
+
+
+
+
+                    <div class="item pasta">
+                        <img src="img/pasta/1.jpg" alt="Classic Burger (Large)">
+                        <p>Chicken n Cheese Pasta - Rs. 1500.00 </p>
+                        <button class="add-btn"onclick="addToCart('Chicken n Cheese Pasta Rs. 1500.00',1500)">Add</button>
+                    </div>
+                    <div class="item pasta">
+                        <img src="img/pasta/2.jpeg" alt="Chicken Burger (Large)">
+                        <p>Chicken Penne Pasta - Rs. 1700.00 </p>
+                        <button class="add-btn"onclick="addToCart('Chicken Penne Pasta Rs. 1700.00',1700)">Add</button>
+                    </div>
+                    <div class="item pasta">
+                        <img src="img/pasta/3.jpg" alt="Another Item">
+                        <p>Ground Turkey Pasta Bake - Rs. 2900.00 </p>
+                        <button class="add-btn"onclick="addToCart('Ground Turkey Pasta Bake Rs. 2900.00',2900)">Add</button>
+                    </div>
+                    <div class="item pasta">
+                        <img src="img/pasta/4.jpg" alt="Classic Burger (Large)">
+                        <p>Creamy Shrimp Pasta - Rs. 2000.00 </p>
+                        <button class="add-btn"onclick="addToCart('Creamy Shrimp Pasta Rs. 2000.00',2000)">Add</button>
+                    </div>
+                    <div class="item pasta">
+                        <img src="img/pasta/5.jpg" alt="Classic Burger (Large)">
+                        <p> Lemon Butter Pasta - Rs. 1950.00 </p>
+                        <button class="add-btn"onclick="addToCart(' Lemon Butter Pasta Rs. 1950.00',1950)">Add</button>
+                    </div>
+                    <div class="item pasta">
+                        <img src="img/pasta/6.jpg" alt="Classic Burger (Large)">
+                        <p>Tagliatelle Pasta - Rs. 2400.00 </p>
+                        <button class="add-btn"onclick="addToCart('Tagliatelle Pasta Rs. 2400.00',2400)">Add</button>
+                    </div>
+                    <div class="item pasta">
+                        <img src="img/pasta/7.jpeg" alt="Classic Burger (Large)">
+                        <p>Baked Ravioli - Rs. 2000.00 </p>
+                        <button class="add-btn"onclick="addToCart('Classic Burger (Regular) Rs. 2000.00',2000)">Add</button>
+                    </div>
+                    <!-- end pasta items -->
+
+
+
+
+
+                    <div class="item Fries">
+                        <img src="img/fries/1.jpg" alt="Classic Burger (Large)">
+                        <p>Steak Fries (Large) - Rs. 1200.00  </p>
+                        <button class="add-btn"onclick="addToCart('Steak Fries (Large)  Rs. 1200.00',1200)">Add</button>
+                    </div>
+                    <div class="item Fries">
+                        <img src="img/fries/2.jpg" alt="Chicken Burger (Large)">
+                        <p>Steak Fries (Medium) - Rs. 600.00 </p>
+                        <button class="add-btn"onclick="addToCart('Steak Fries (Medium) Rs. 600.00',600)">Add</button>
+                    </div>
+                    <div class="item Fries">
+                        <img src="img/fries/3.jpg" alt="Another Item">
+                        <p>French Fries (Large) - Rs. 800.00 </p>
+                        <button class="add-btn"onclick="addToCart('French Fries (Large) Rs. 800.00',800)">Add</button>
+                    </div>
+                    <div class="item Fries">
+                        <img src="img/fries/4.jpg" alt="Another Item">
+                        <p>French Fries (Medium) - Rs. 650.00 </p>
+                        <button class="add-btn"onclick="addToCart('French Fries (Medium) Rs. 650.00',650)">Add</button>
+                    </div>
+                    <div class="item Fries">
+                        <img src="img/fries/5.jpg" alt="Another Item">
+                        <p>French Fries (Small) - Rs. 450.00 </p>
+                        <button class="add-btn"onclick="addToCart('French Fries (Small) Rs. 450.00',450)">Add</button>
+                    </div>
+                    <div class="item Fries">
+                        <img src="img/fries/6.jpg" alt="Another Item">
+                        <p>Sweet Potato Fries (Large)  - Rs. 600.00 </p>
+                        <button class="add-btn"onclick="addToCart('Sweet Potato Fries (Large) Rs. 600.00',600)">Add</button>
+                    </div>
+                     <!-- end fries items -->
+                    
+
+
+                    <div class="item submarine">
+                        <img src="img/submarine/7.jpeg" alt="Classic Burger (Large)">
+                        <p>Crispy Chicken Submarine (Large) - Rs. 2000.00 </p>
+                        <button class="add-btn"onclick="addToCart('Crispy Chicken Submarine (Large) Rs. 2000.00',2000)">Add</button>
+                    </div>
+                    <div class="item submarine">
+                        <img src="img/submarine/8.jpg" alt="Chicken Burger (Large)">
+                        <p>Crispy Chicken Submarine (Regular) - Rs. 1500.00</p>
+                        <button class="add-btn"onclick="addToCart('Crispy Chicken Submarine (Regular) Rs. 1500.00',1500)">Add</button>
+                    </div>
+                    <div class="item submarine">
+                        <img src="img/submarine/9.jpg" alt="Another Item">
+                        <p>Chicken Submarine (Large) - Rs. 1800.00</p>
+                        <button class="add-btn"onclick="addToCart('Chicken Submarine (Large) Rs. 1800.00',1800)">Add</button>
+                    </div>  
+                    <div class="item submarine">
+                        <img src="img/submarine/1.jpg" alt="Another Item">
+                        <p>Chicken Submarine (Regular) - Rs. 1400.00</p>
+                        <button class="add-btn"onclick="addToCart('Chicken Submarine (Regular) Rs. 1400.00',1400)">Add</button>
+                    </div>  
+                    <div class="item submarine">
+                        <img src="img/submarine/2.jpg" alt="Classic Burger (Large)">
+                        <p>Grinder Submarine - Rs. 2300.00</p>
+                        <button class="add-btn"onclick="addToCart('Grinder Submarine Rs. 2300.00',2300)">Add</button>
+                    </div>
+                    <div class="item submarine">
+                        <img src="img/submarine/3.jpg" alt="Chicken Burger (Large)">
+                        <p> Cheese Submarine - Rs. 2200.00</p>
+                        <button class="add-btn"onclick="addToCart('Cheese Submarine Rs. 2200.00',2200)">Add</button>
+                    </div>
+                    <div class="item submarine">
+                        <img src="img/submarine/4.jpg" alt="Another Item">
+                        <p>Double Cheese n Chicken Submarine - Rs. 1900.00</p>
+                        <button class="add-btn"onclick="addToCart('Double Cheese n Chicken Submarine Rs. 1900.00',1900)">Add</button>
+                    </div>  
+                    <div class="item submarine">
+                        <img src="img/submarine/5.jpg" alt="Another Item">
+                        <p>Special Horgie Submarine - Rs. 2800.00</p>
+                        <button class="add-btn"onclick="addToCart('Special Horgie Submarine Rs. 2800.00',2800)">Add</button>
+                    </div> 
+                    <div class="item submarine">
+                        <img src="img/submarine/5.jpg" alt="Another Item">
+                        <p>MOS Special Submarine - Rs. 3000.00</p>
+                        <button class="add-btn"onclick="addToCart('MOS Special Submarine Rs. 3000.00',3000)">Add</button>
+                    </div> 
+                    <!-- end submarine items -->
+
+                    <div class="item Chiken">
+                        <img src="img/chicken/1.jpg" alt="Classic Burger (Large)">
+                        <p>Fried Chicken (Small) - Rs. 1200.00 </p>
+                        <button class="add-btn"onclick="addToCart('Fried Chicken (Small) Rs. 1200.00',1200)">Add</button>
+                    </div>
+                    <div class="item Chiken">
+                        <img src="img/chicken/2.jpeg" alt="Chicken Burger (Large)">
+                        <p>Fried Chicken (Regular)  - Rs. 2300.00</p>
+                        <button class="add-btn"onclick="addToCart('Fried Chicken (Regular) Rs. 2300.00',2300)">Add</button>
+                    </div>
+                    <div class="item Chiken">
+                        <img src="img/chicken/3.jpg" alt="Another Item">
+                        <p> Fried Chicken (Large) - Rs. 3100.00</p>
+                        <button class="add-btn"onclick="addToCart(' Fried Chicken (Large) Rs. 3100.00',3100)">Add</button>
+                    </div>  
+                    <div class="item Chiken">
+                        <img src="img/chicken/4.jpeg" alt="Another Item">
+                        <p>Hot Wings (Large) - Rs. 2400.00</p>
+                        <button class="add-btn"onclick="addToCart('Hot Wings (Large) Rs. 2400.00',2400)">Add</button>
+                    </div>  
+                    <div class="item Chiken">
+                        <img src="img/chicken/5.jpg" alt="Another Item">
+                        <p>Devilled Chicken (Large)  - Rs. 900.00</p>
+                        <button class="add-btn"onclick="addToCart('Devilled Chicken (Large) Rs. 900.00',900)">Add</button>
+                    </div>  
+                    <div class="item Chiken">
+                        <img src="img/chicken/6.jp" alt="Another Item">
+                        <p>BBQ Chicken (Regular)  - Rs. 2100.00</p>
+                        <button class="add-btn"onclick="addToCart('BBQ Chicken (Regular)  Rs. 2100.00',2100)">Add</button>
+                    </div>  
+
+
+                    <div class="item Bevarages">
+                        <img src="img/bevarages/pepsi.jpeg" alt="Another Item">
+                        <p> Pepsi (330ml) - Rs. 990.00</p>
+                        <button class="add-btn"onclick="addToCart(' Pepsi (330ml) Rs. 990.00',990)">Add</button>
+                    </div>  
+                    <div class="item Bevarages">
+                        <img src="img/bevarages/coca 2.jpg" alt="Another Item">
+                        <p>Coca-Cola (330ml) - Rs. 1230.00</p>
+                        <button class="add-btn"onclick="addToCart('Coca-Cola (330ml) Rs. 1230.00',1230)">Add</button>
+                    </div>  
+                    <div class="item Bevarages">
+                        <img src="img/bevarages/sprite.jpg" alt="Another Item">
+                        <p>Sprite (330ml)  - Rs. 1500.00</p>
+                        <button class="add-btn"onclick="addToCart('Sprite (330ml) Rs. 1500.00',1500)">Add</button>
+                    </div>  
+                    <div class="item Bevarages">
+                        <img src="img/bevarages/mirinda.jpg" alt="Another Item">
+                        <p>Mirinda (330ml)  - Rs. 850.00</p>
+                        <button class="add-btn"onclick="addToCart('Mirinda (330ml)  Rs. 850.00',850)">Add</button>
+                    </div>  
+                </div>        
+            </div>
+            
+            <!-- end of content class -->
+            <div id="cart-container">
+                <h2>New Order <button>Delete</button></h2>
+                <div class="order-items" id="cart">
+                    <p>No items in the cart.</p>
+                </div>
+                <div id="total">Total: Rs.0</div>
+
+                <button class="payment-btn" id="buy-button" onclick="showModal()">Payment</button>
+            </div>
+            
+        </div>
+    </div>
+
+ <!-- Modal for Buy -->
+ <div id="buyModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2>Checkout</h2>
+        <p id="modal-total"></p>
+        <p id="modal-discount"></p>
+        <p id="modal-net"></p>
+        <button class="buy-now" onclick="generatePDF()">Buy Now</button>
+    </div>
+</div>
+
+
+
+             <!-- Add Item Modal -->
+             <div id="addItemModal" class="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="closeAddItemModal()">&times;</span>
+                    <h2>Add Item</h2>
+                    <input type="text" id="newItemName" placeholder="Item Name"><br>
+                    <input type="number" id="newItemPrice" placeholder="Item Price"><br>
+                    <input type="text" id="newItemImg" placeholder="Item Image URL"><br>
+                    <button class="add-now" onclick="addItem()">Add Item</button>
+                </div>
+            </div>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+
+    <!-- navigation for food item buttons buttons -->
+    <script>
+        function showItems(type) {
+            
+            document.getElementById('itemaddarea').style.display = 'none';
+            
+            // Hide all menu items
+            const allItems = document.querySelectorAll('.item');
+            allItems.forEach(item => item.classList.remove('visible'));
+
+            // Show items of the selected type
+            const selectedItems = document.querySelectorAll('.' + type);
+            selectedItems.forEach(item => item.classList.add('visible'));
+        }
+
+        // On load, show burgers by default
+        document.addEventListener('DOMContentLoaded', () => {
+            showItems('burger');
+        });
+    </script>
+    <script src="java.js"></script>
+</body>
+</html>

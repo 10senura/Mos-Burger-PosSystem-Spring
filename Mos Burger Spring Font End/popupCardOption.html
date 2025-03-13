@@ -1,0 +1,89 @@
+<!-- Your Menu -->
+<div class="menu">
+    <a class="menu-item" onclick="showItems('burger')"><i class="home-icon"></i></a>
+    <a class="menu-item" onclick="itemmannger('burger')"><i class="food-icon"></i></a>
+    <a class="menu-item" onclick="loadContent('pasta.html')"><i class="table-icon"></i></a> 
+    <a class="menu-item" onclick="openPopup()"><i class="fa fa-list"></i></a> <!-- Dashboard Popup Trigger -->
+    <a href="#" class="menu-item"><i class="table-icon"></i></a>
+    <a href="#" class="menu-item"><i class="chart-icon"></i></a>
+    <a href="#" class="menu-item"><i class="logout-icon"></i></a> 
+</div>
+
+<!-- The Popup Modal -->
+<div id="popupModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closePopup()">&times;</span>
+        <h3>Select an Option</h3>
+        <button onclick="navigateToPage('burgermanage.html')">Burger Management</button>
+        <button onclick="navigateToPage('pasta.html')">Pasta Management</button>
+        <button onclick="navigateToPage('drinks.html')">Drinks Management</button>
+        <button onclick="navigateToPage('desserts.html')">Desserts Management</button>
+    </div>
+</div>
+
+<!-- Content Area to Load Pages -->
+<div id="contentArea" class="container mt-5"></div>
+
+<!-- Font Awesome Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<!-- CSS Styles for Modal -->
+<style>
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-content {
+        background-color: white;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 400px;
+        text-align: center;
+        border-radius: 10px;
+    }
+
+    .close {
+        color: red;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .modal-content button {
+        margin: 10px;
+        padding: 10px 20px;
+        cursor: pointer;
+    }
+</style>
+
+<!-- JavaScript for Popup and Navigation -->
+<script>
+    function openPopup() {
+        document.getElementById("popupModal").style.display = "block";
+    }
+
+    function closePopup() {
+        document.getElementById("popupModal").style.display = "none";
+    }
+
+    function navigateToPage(page) {
+        closePopup();  // Close the popup before loading the page
+        fetch(page)
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("contentArea").innerHTML = data;
+            })
+            .catch(error => console.error("Error loading content:", error));
+    }
+</script>
