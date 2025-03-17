@@ -7,37 +7,60 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
+    
     <div class="container mt-5">
         <h2 class="text-center mb-4">Order Management</h2>
 
-        <!-- Add/Update Order Form -->
+        <!-- Add Order Form -->
         <div class="card p-3 mb-4">
-            <h4>Manage Order</h4>
-            <input type="text" id="orderName" class="form-control mb-2" placeholder="Enter Order Name">
-            <input type="number" id="burgerId" class="form-control mb-2" placeholder="Enter Burger ID">
-            <input type="number" id="quantity" class="form-control mb-2" placeholder="Enter Quantity">
-            <input type="text" id="orderStatus" class="form-control mb-2" placeholder="Enter Order Status">
-            <button class="btn btn-success mb-2" onclick="addOrder()">Add Order</button>
-            <button class="btn btn-warning mb-2" onclick="updateOrder()">Update Order</button>
+            <h4>Add Order</h4>
+            <input type="text" id="orderName" class="form-control mb-2" placeholder="Order Name">
+            <input type="number" id="burgerId" class="form-control mb-2" placeholder="Burger ID">
+            <input type="number" id="quantity" class="form-control mb-2" placeholder="Quantity">
+            <input type="text" id="orderStatus" class="form-control mb-2" placeholder="Status">
+            <input type="date" id="orderDate" class="form-control mb-2">
+            <button class="btn btn-success" onclick="addOrder()">Add Order</button>
         </div>
 
-        <!-- Search Order Form -->
-        <div class="card p-3 mb-4">
-            <h4>Search Order</h4>
-            <input type="text" id="searchOrder" class="form-control mb-2" placeholder="Enter Order Name">
-            <button class="btn btn-primary" onclick="searchOrder()">Search</button>
+        <!-- Update Order Form -->
+        <div class="card p-3 mb-4" id="updateOrderForm" style="display:none;">
+            <h4>Update Order</h4>
+            <input type="text" id="updateOrderName" class="form-control mb-2" placeholder="Order Name">
+            <input type="number" id="updateBurgerId" class="form-control mb-2" placeholder="Burger ID">
+            <input type="number" id="updateQuantity" class="form-control mb-2" placeholder="Quantity">
+            <input type="text" id="updateOrderStatus" class="form-control mb-2" placeholder="Status">
+            <input type="date" id="updateOrderDate" class="form-control mb-2">
+            <button class="btn btn-warning" onclick="updateOrderDetails()">Update Order</button>
+            <button class="btn btn-secondary" onclick="cancelUpdate()">Cancel</button>
         </div>
 
-        <!-- Order Table -->
+        <!-- Search Orders -->
+        <div class="card p-3 mb-4">
+            <h4>Search Orders</h4>
+            <div class="row g-2">
+                <div class="col-md-6">
+                    <input type="number" id="searchOrderId" class="form-control" placeholder="Search by Order ID">
+                    <button class="btn btn-primary mt-2" onclick="searchOrderById()">Search by ID</button>
+                </div>
+                <div class="col-md-6">
+                    <input type="text" id="searchOrderName" class="form-control" placeholder="Search by Order Name">
+                    <button class="btn btn-primary mt-2" onclick="searchOrderByName()">Search by Name</button>
+                </div>
+            </div>
+        </div>
+
+        <button class="btn btn-primary mb-3" onclick="loadOrders()">Reload Data</button>
+
+        <!-- Orders Table -->
         <div class="table-responsive">
             <table class="table table-bordered table-striped">
                 <thead class="table-dark">
                     <tr>
-                        <th>ID</th>
+                        <th>Order ID</th>
                         <th>Order Name</th>
                         <th>Burger ID</th>
                         <th>Quantity</th>
-                        <th>Order Status</th>
+                        <th>Status</th>
                         <th>Order Date</th>
                         <th>Actions</th>
                     </tr>
@@ -47,7 +70,7 @@
         </div>
     </div>
 
-    <script src="orderManage.js"></script>
+    <script src="ordermanager.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
