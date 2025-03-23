@@ -7,61 +7,58 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    
     <div class="container mt-5">
         <h2 class="text-center mb-4">Order Management</h2>
 
         <!-- Add Order Form -->
         <div class="card p-3 mb-4">
             <h4>Add Order</h4>
-            <input type="text" id="orderName" class="form-control mb-2" placeholder="Order Name">
-            <input type="number" id="burgerId" class="form-control mb-2" placeholder="Burger ID">
-            <input type="number" id="quantity" class="form-control mb-2" placeholder="Quantity">
-            <input type="text" id="orderStatus" class="form-control mb-2" placeholder="Status">
-            <input type="date" id="orderDate" class="form-control mb-2">
+            <input type="number" id="orderBurgerId" class="form-control mb-2" placeholder="Enter Burger ID">
+            <input type="text" id="orderCustomerName" class="form-control mb-2" placeholder="Enter Customer Name">
+            <input type="date" id="orderDate" class="form-control mb-2" placeholder="Enter Order Date">
+            <input type="text" id="orderStatus" class="form-control mb-2" placeholder="Enter Order Status">
+            <input type="number" id="orderQuantity" class="form-control mb-2" placeholder="Enter Quantity">
+            <input type="text" id="orderName" class="form-control mb-2" placeholder="Enter Order Name">
             <button class="btn btn-success" onclick="addOrder()">Add Order</button>
         </div>
 
         <!-- Update Order Form -->
         <div class="card p-3 mb-4" id="updateOrderForm" style="display:none;">
             <h4>Update Order</h4>
-            <input type="text" id="updateOrderName" class="form-control mb-2" placeholder="Order Name">
-            <input type="number" id="updateBurgerId" class="form-control mb-2" placeholder="Burger ID">
-            <input type="number" id="updateQuantity" class="form-control mb-2" placeholder="Quantity">
-            <input type="text" id="updateOrderStatus" class="form-control mb-2" placeholder="Status">
-            <input type="date" id="updateOrderDate" class="form-control mb-2">
+            <input type="number" id="updateOrderId" class="form-control mb-2" placeholder="Enter Order ID" disabled>
+            <input type="number" id="updateBurgerId" class="form-control mb-2" placeholder="Enter Burger ID">
+            <input type="text" id="updateCustomerName" class="form-control mb-2" placeholder="Enter Customer Name">
+            <input type="date" id="updateOrderDate" class="form-control mb-2" placeholder="Enter Order Date">
+            <input type="text" id="updateOrderStatus" class="form-control mb-2" placeholder="Enter Order Status">
+            <input type="number" id="updateQuantity" class="form-control mb-2" placeholder="Enter Quantity">
+            <input type="text" id="updateOrderName" class="form-control mb-2" placeholder="Enter Order Name">
             <button class="btn btn-warning" onclick="updateOrderDetails()">Update Order</button>
             <button class="btn btn-secondary" onclick="cancelUpdate()">Cancel</button>
         </div>
 
-        <!-- Search Orders -->
+        <!-- Search Order Forms -->
         <div class="card p-3 mb-4">
-            <h4>Search Orders</h4>
-            <div class="row g-2">
-                <div class="col-md-6">
-                    <input type="number" id="searchOrderId" class="form-control" placeholder="Search by Order ID">
-                    <button class="btn btn-primary mt-2" onclick="searchOrderById()">Search by ID</button>
-                </div>
-                <div class="col-md-6">
-                    <input type="text" id="searchOrderName" class="form-control" placeholder="Search by Order Name">
-                    <button class="btn btn-primary mt-2" onclick="searchOrderByName()">Search by Name</button>
-                </div>
-            </div>
+            <h4>Search Order</h4>
+            <input type="number" id="searchOrderById" class="form-control mb-2" placeholder="Enter Order ID">
+            <button class="btn btn-primary mb-2" onclick="searchOrderById()">Search by ID</button>
+            <input type="text" id="searchOrderByName" class="form-control mb-2" placeholder="Enter Order Name">
+            <button class="btn btn-primary" onclick="searchOrderByName()">Search by Name</button>
         </div>
 
         <button class="btn btn-primary mb-3" onclick="loadOrders()">Reload Data</button>
 
-        <!-- Orders Table -->
+        <!-- Order Table -->
         <div class="table-responsive">
             <table class="table table-bordered table-striped">
                 <thead class="table-dark">
                     <tr>
                         <th>Order ID</th>
-                        <th>Order Name</th>
                         <th>Burger ID</th>
-                        <th>Quantity</th>
-                        <th>Status</th>
+                        <th>Customer Name</th>
                         <th>Order Date</th>
+                        <th>Order Status</th>
+                        <th>Quantity</th>
+                        <th>Order Name</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -70,7 +67,7 @@
         </div>
     </div>
 
-    <script src="ordermanager.js"></script>
+    <script src="ordermanage.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
