@@ -1,0 +1,32 @@
+
+.home-icon { background-image: url('img/icons8-home-24 1.svg'); }
+.food-icon { background-image: url('img/add.png'); }
+.user-icon { background-image: url('img/icons8-spoon-and-fork-48 1.svg'); }
+.table-icon { background-image: url('img/icons8-customer-50 1.svg'); }
+.chart-icon { background-image: url('img/st.svg'); }
+.logout-icon { background-image: url('img/icons8-reports-50 1.svg'); }
+
+/* Sidebar Compatibility */
+body {
+    flex-direction: row !important; /* Override Bootstrap if needed */
+    overflow: hidden;
+}
+
+.sidebar {
+    width: 60px;
+    height: 100vh;
+    background-color: #f1f1f1;
+    flex-shrink: 0;
+}
+
+.container {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    margin-left: 60px; /* Match sidebar width */
+}
+
+/* Ensure Bootstrap tables don't overflow */
+.table-responsive {
+    max-width: calc(100vw - 80px);
+}

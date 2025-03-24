@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Restaurant Ordering System</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="orderstyle.css">
+
 </head>
 <body>
     <div class="container">
@@ -16,12 +18,13 @@
                 <a class="menu-item" onclick="showItems('burger')"><i class="home-icon"></i></a>
                 <a class="menu-item" onclick="showItems(window.location.href='burgermanage.html')"><i class="food-icon"></i></a>
                 <a class="menu-item" onclick="showItems(window.location.href='orderManage.html')"><i class="food-icon"></i></a>
-                <a href="#" class="menu-item"><i class="logout-icon"></i></a> 
-                <a href="#" class="menu-item"><i class="logout-icon"></i></a> 
-
-
+                <a href="#" class="menu-item"><i class="table-icon"></i></a>
+                <a href="#" class="menu-item"><i class="chart-icon"></i></a>
+                <a href="#" class="menu-item"><i class="logout-icon"></i></a>  
             </div>
         </div>
+
+
         <div class="main">
             <div class="content">
                 <div class="header">
@@ -37,38 +40,54 @@
                 
                 <div class="categories">
                     <button class="category-btn" onclick="showItems('burger')">Burger</button>
-                    <button class="category-btn" onclick="showItems(window.location.href='pasta.html')">Pasta</button>
+                    <button class="category-btn" onclick="showItems('pasta')">Pasta</button>
                     <button class="category-btn" onclick="showItems('Fries')">Fries</button>
                     <button class="category-btn" onclick="showItems('submarine')">Submarine</button>
                     <button class="category-btn" onclick="showItems('Chiken')">Chiken</button>
                     <button class="category-btn" onclick="showItems('Bevarages')">Bevarages</button>
-                    <button class="category-btn" onclick="showItems(window.location.href='burgermanage.html')">All list</button>
 
                 </div>
                 <div id="itemmenu" class="items" >
-
-                    <!-- Update Pasta Form -->
-<div id="updateForm" style="display: none;">
-    <h2>Update Pasta</h2>
-    <input type="hidden" id="updatePastaId">
-    <label for="updateItemName">Name:</label>
-    <input type="text" id="updateItemName"><br><br>
-
-    <label for="updateItemPrice">Price:</label>
-    <input type="number" id="updateItemPrice"><br><br>
-
-    <label for="updateItemImg">Image URL:</label>
-    <input type="text" id="updateItemImg"><br><br>
-
-    <button onclick="updatePasta()">Save Changes</button>
+                    
+                  <!-- item add area -->    
+                  <div class="itemaddarea visible" id="itemaddarea">
+                   </div>
                     </div>
-                  </div>
+
+                 <!-- Pasta Item Card -->
+                <div class="item pasta visible">
+                    <div class="item-details">
+                        <button class="add-btn" onclick="showQuantityModal('Chicken n Cheese Pasta', 1500, 'img/pasta/chicken-cheese-pasta.jpg')">Add</button>
+                    </div>
+                </div>
+                    <!-- end pasta items -->
+
+                    <div class="item Fries">
+                        <button class="add-btn"onclick="addToCart('Steak Fries (Large)  Rs. 1200.00',1200)">Add</button>
+                    </div>
+                
+                     <!-- end fries items -->
+                    <div class="item submarine">
+                        <button class="add-btn"onclick="addToCart('Crispy Chicken Submarine (Large) Rs. 2000.00',2000)">Add</button>
+                    </div>
+                    </div> 
+                    <!-- end submarine items -->
+                    <div class="item Chiken">
+                        <button class="add-btn"onclick="addToCart('Fried Chicken (Small) Rs. 1200.00',1200)">Add</button>
+                    </div>
+                    </div>  
+
+
+                    <div class="item Bevarages">
+                        <button class="add-btn"onclick="addToCart(' Pepsi (330ml) Rs. 990.00',990)">Add</button>
+                    </div>  
+                    </div>  
                 </div>        
-             </div>
+            </div>
             
             <!-- end of content class -->
             <div id="cart-container">
-                <h2>New Order </h2>
+                <h2>New Order <button>Delete</button></h2>
                 <div class="order-items" id="cart">
                     <p>No items in the cart.</p>
                 </div>
@@ -79,6 +98,8 @@
             
         </div>
     </div>
+
+
 
  <!-- Modal for Buy -->
  <div id="buyModal" class="modal">
@@ -108,6 +129,9 @@
 
 
 
+
+
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 
@@ -132,5 +156,7 @@
         });
     </script>
     <script src="java.js"></script>
+    <script src="orderlist.js"></script>
+
 </body>
 </html>

@@ -1,139 +1,159 @@
-// Function to load all burgers from the backend
-async function loadAllBurgers() {
-    try {
-        const response = await fetch('http://localhost:8080/burgers/allBurger');
-        const burgers = await response.json();
-
-        const menu = document.getElementById('itemmenu');
-        menu.innerHTML = ''; // Clear previous items
-
-        burgers.forEach(burger => {
-            const newItem = document.createElement('div');
-            newItem.classList.add('item', 'visible', 'burger');
-            newItem.innerHTML = `<div class="item visible burger">
-                <p>${burger.name} - Rs.${burger.price}</p>
-                <img src="${burger.image_url}" alt="${burger.name}" width="75"><br>
-                <button class="add-btn" onclick="addToCart('${burger.name}', ${burger.price})">Add</button>
-                <button class="delete-btn" onclick="deleteBurger(${burger.id})">Delete</button>
-            </div>`;
-            menu.appendChild(newItem);
+// Add this code to your existing JavaScript
+const API_ENDPOINTS = {
+    burger: 'http://localhost:8080/burgers/allBurger',
+    pasta: 'http://localhost:8080/pasta/allPasta',
+    Fries: 'http://localhost:8080/fries/allFries',
+    submarine: 'http://localhost:8080/submarines/allSubmarine',
+    Chiken: 'http://localhost:8080/chikens/allChiken',
+    Bevarages: 'http://localhost:8080/bevarages/allBevarages'
+  };
+  
+  // Fetch data from API and populate items
+  async function loadMenuItems() {
+    const itemsContainer = document.getElementById('itemmenu');
+    
+    for (const [category, endpoint] of Object.entries(API_ENDPOINTS)) {
+      try {
+        const response = await fetch(endpoint);
+        const items = await response.json();
+        
+        items.forEach(item => {
+          const itemDiv = document.createElement('div');
+          itemDiv.className = `item ${category}`;
+          itemDiv.dataset.category = category;
+          
+          itemDiv.innerHTML = `
+            <img src="${item.image_url}" alt="${item.name}">
+            <p>${item.name} - Rs.${item.price}</p>
+            <button class="add-btn" onclick="addToCart('${item.name}', ${item.price})">Add</button>
+          `;
+          
+          itemsContainer.appendChild(itemDiv);
         });
-    } catch (error) {
-        console.error('Error loading burgers:', error);
+      } catch (error) {
+        console.error(`Error loading ${category}:`, error);
+      }
     }
-}
-
-// Function to add a new burger to the backend
-async function addBurger() {
-    const itemName = document.getElementById('newItemName').value;
-    const itemPrice = parseFloat(document.getElementById('newItemPrice').value);
-    const itemImg = document.getElementById('newItemImg').value;
-
-    if (itemName && itemPrice && itemImg) {
-        const newBurger = {
-            name: itemName,
-            price: itemPrice,
-            image: itemImg
-        };
-
-        try {
-            const response = await fetch('http://localhost:8080/burgers/addBurger', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(newBurger)
-            });
-
-            if (response.ok) {
-                alert('Burger added successfully!');
-                loadAllBurgers(); // Refresh the list after adding
-                closeAddItemModal();
-            } else {
-                alert('Failed to add burger.');
-            }
-        } catch (error) {
-            console.error('Error adding burger:', error);
-        }
-    }
-}
-
-// Function to delete a burger from the backend
-async function deleteBurger(burgerId) {
-    try {
-        const response = await fetch(`http://localhost:8080/burgers/delete/${burgerId}`, {
-            method: 'DELETE'
-        });
-
-        if (response.ok) {
-            alert('Burger deleted successfully!');
-            loadAllBurgers();
-        } else {
-            alert('Failed to delete burger.');
-        }
-    } catch (error) {
-        console.error('Error deleting burger:', error);
-    }
-}
-
-// Function to update a burger
-async function updateBurger(burgerId, updatedBurger) {
-    try {
-        const response = await fetch('http://localhost:8080/burgers/updateBurger', {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(updatedBurger)
-        });
-
-        if (response.ok) {
-            alert('Burger updated successfully!');
-            loadAllBurgers();
-        } else {
-            alert('Failed to update burger.');
-        }
-    } catch (error) {
-        console.error('Error updating burger:', error);
-    }
-}
-
-// Function to search burger by ID
-async function searchBurgerById(burgerId) {
-    try {
-        const response = await fetch(`http://localhost:8080/burgers/search-by-id/${burgerId}`);
-        const burger = await response.json();
-        console.log('Burger found:', burger);
-    } catch (error) {
-        console.error('Error searching burger by ID:', error);
-    }
-}
-
-// Function to search burger by Name
-async function searchBurgerByName(burgerName) {
-    try {
-        const response = await fetch(`http://localhost:8080/burgers/search-by-name/${burgerName}`);
-        const burger = await response.json();
-        console.log('Burger found:', burger);
-    } catch (error) {
-        console.error('Error searching burger by Name:', error);
-    }
-}
-
-// Function to search burgers (filters items without reloading)
-function searchItems() {
-    const searchInput = document.getElementById('search-bar').value.toLowerCase();
-    const items = document.querySelectorAll('.item');
-
-    items.forEach(item => {
-        const itemName = item.querySelector('p').textContent.toLowerCase();
-        if (itemName.includes(searchInput)) {
-            item.classList.remove('hidden');
-        } else {
-            item.classList.add('hidden');
-        }
+  }
+  
+  // Modified showItems function
+  function showItems(category) {
+    document.getElementById('itemaddarea').style.display = 'none';
+    const allItems = document.querySelectorAll('.item');
+    
+    allItems.forEach(item => {
+      if (category === 'list' || item.dataset.category === category) {
+        item.classList.add('visible');
+      } else {
+        item.classList.remove('visible');
+      }
     });
+  }
+  
+  // Update search function
+  function searchItems() {
+    const searchTerm = document.getElementById('search-bar').value.toLowerCase();
+    const items = document.querySelectorAll('.item');
+    
+    items.forEach(item => {
+      const itemName = item.querySelector('p').textContent.toLowerCase();
+      item.style.display = itemName.includes(searchTerm) ? 'block' : 'none';
+    });
+  }
+  
+  // Initialize on page load
+  document.addEventListener('DOMContentLoaded', () => {
+    loadMenuItems().then(() => showItems('burger'));
+  });
+
+
+
+  /////////////////////////////////////////////////////
+
+  let currentItem = null;
+
+function showQuantityModal(name, price, image) {
+    currentItem = { name, price, image };
+    document.getElementById('modalItemImage').src = image;
+    document.getElementById('modalItemName').textContent = name;
+    document.getElementById('modalItemPrice').textContent = `Rs.${price}`;
+    document.getElementById('itemQty').value = 1;
+    document.getElementById('quantityModal').style.display = 'block';
 }
 
-// Load all burgers when the page loads
-window.onload = loadAllBurgers;
+function closeQuantityModal() {
+    document.getElementById('quantityModal').style.display = 'none';
+    currentItem = null;
+}
+
+function adjustModalQty(change) {
+    const qtyInput = document.getElementById('itemQty');
+    let newVal = parseInt(qtyInput.value) + change;
+    if(newVal < 1) newVal = 1;
+    qtyInput.value = newVal;
+}
+
+function confirmAddToCart() {
+    if(currentItem) {
+        const quantity = parseInt(document.getElementById('itemQty').value);
+        addToCart(currentItem.name, currentItem.price, quantity, currentItem.image);
+        closeQuantityModal();
+    }
+}
+
+// Modified addToCart function
+function addToCart(itemName, price, quantity = 1, image) {
+    const existingItem = cart.find(item => item.name === itemName);
+    
+    if(existingItem) {
+        existingItem.quantity += quantity;
+    } else {
+        cart.push({
+            name: itemName,
+            price: price,
+            quantity: quantity,
+            image: image
+        });
+    }
+    updateCart();
+}
+
+// Modified updateCart function
+function updateCart() {
+    const cartContainer = document.getElementById('cart');
+    const totalElement = document.getElementById('total');
+    cartContainer.innerHTML = '';
+    
+    let total = 0;
+    
+    cart.forEach((item, index) => {
+        total += item.price * item.quantity;
+        
+        const itemElement = document.createElement('div');
+        itemElement.className = 'cart-item';
+        itemElement.innerHTML = `
+            <img src="${item.image}" alt="${item.name}" style="width: 50px; height: 50px; object-fit: cover;">
+            <div class="item-details">
+                <h4>${item.name}</h4>
+                <p>Rs.${item.price} x ${item.quantity}</p>
+                <div class="item-controls">
+                    <button onclick="adjustCartQty(${index}, -1)">-</button>
+                    <button onclick="adjustCartQty(${index}, 1)">+</button>
+                    <button onclick="removeFromCart(${index})">Remove</button>
+                </div>
+            </div>
+        `;
+        
+        cartContainer.appendChild(itemElement);
+    });
+    
+    totalElement.textContent = `Total: Rs.${total}`;
+}
+
+function adjustCartQty(index, change) {
+    cart[index].quantity += change;
+    if(cart[index].quantity < 1) {
+        cart.splice(index, 1);
+    }
+    updateCart();
+}
