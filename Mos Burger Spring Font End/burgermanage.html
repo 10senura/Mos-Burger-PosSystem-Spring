@@ -5,13 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Burger Management</title>
     <link rel="stylesheet" href="burgermanage.css">
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-
     <div class="sidebar">
         <div class="logo">
-            <img src="img/logo.svg" alt="Logo">
+            <img src="img/logo.png" alt="Logo">
         </div>
         <div class="menu">
             <a href="#" class="menu-item">
@@ -35,73 +34,94 @@
         </div>
     </div>
 
-    <body>
-        <!-- Sidebar -->
-        <div class="sidebar">
-            <!-- ... sidebar content ... -->
-        </div>
-    
-        <!-- Main Content -->
-        <div class="container mt-5">
-            <!-- ... burger management content ... -->
-        </div>
-    </body>
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="container mt-3">
+            <h2 class="text-center mb-4">Burger Management</h2>
 
-    <div class="container mt-5">
-        <h2 class="text-center mb-4">Burger Management</h2>
+            <!-- Add Burger Form -->
+            <div class="card p-3 mb-4">
+                <h4>Add Burger</h4>
+                <input type="text" id="burgerName" class="form-control mb-2" placeholder="Enter Burger Name" required>
+                <input type="number" id="burgerPrice" class="form-control mb-2" placeholder="Enter Burger Price" required>
+                <input type="text" id="burgerDescription" class="form-control mb-2" placeholder="Enter Description" required>
+                
+                <div class="mb-3">
+                    <label for="burgerImageUpload" class="form-label">Upload Burger Image</label>
+                    <input type="file" id="burgerImageUpload" class="form-control" accept="image/*" required>
+                    <div class="form-text">Maximum file size: 2MB</div>
+                </div>
+                <div id="imagePreview" class="mt-2 mb-3" style="display:none;">
+                    <img id="previewImage" src="#" alt="Preview" style="max-width: 200px; max-height: 200px;">
+                </div>
+                
+                <select id="burgerAvailable" class="form-select mb-3" required>
+                    <option value="" disabled selected>Select Availability</option>
+                    <option value="true">Available</option>
+                    <option value="false">Not Available</option>
+                </select>
+                
+                <button class="btn btn-success" onclick="addBurger()">Add Burger</button>
+                <div id="addStatus" class="mt-2"></div>
+            </div>
 
-        <!-- Add Burger Form -->
-        <div class="card p-3 mb-4">
-            <h4>Add Burger</h4>
-            <input type="text" id="burgerName" class="form-control mb-2" placeholder="Enter Burger Name">
-            <input type="number" id="burgerPrice" class="form-control mb-2" placeholder="Enter Burger Price">
-            <input type="text" id="burgerDescription" class="form-control mb-2" placeholder="Enter Description">
-            <input type="text" id="burgerImageUrl" class="form-control mb-2" placeholder="Enter Image URL">
-            <input type="text" id="burgerAvailable" class="form-control mb-2" placeholder="Enter Availability">
-            <button class="btn btn-success" onclick="addBurger()">Add Burger</button>
-        </div>
+            <!-- Update Burger Form -->
+            <div class="card p-3 mb-4" id="updateBurgerForm" style="display:none;">
+                <h4>Update Burger</h4>
+                <input type="text" id="updateName" class="form-control mb-2" placeholder="Enter New Name" required>
+                <input type="number" id="updatePrice" class="form-control mb-2" placeholder="Enter New Price" required>
+                <input type="text" id="updateDescription" class="form-control mb-2" placeholder="Enter New Description" required>
+                
+                <div class="mb-3">
+                    <label for="updateImageUpload" class="form-label">Update Burger Image</label>
+                    <input type="file" id="updateImageUpload" class="form-control" accept="image/*">
+                    <div class="form-text">Leave empty to keep current image</div>
+                </div>
+                <div id="updateImagePreview" class="mt-2 mb-3">
+                    <img id="updatePreviewImage" src="#" alt="Preview" style="max-width: 200px; max-height: 200px;">
+                </div>
+                
+                <select id="updateAvailable" class="form-select mb-3" required>
+                    <option value="true">Available</option>
+                    <option value="false">Not Available</option>
+                </select>
+                
+                <button class="btn btn-warning" onclick="updateBurgerDetails()">Update Burger</button>
+                <button class="btn btn-secondary" onclick="cancelUpdate()">Cancel</button>
+                <div id="updateStatus" class="mt-2"></div>
+            </div>
 
-        <!-- Update Burger Form -->
-        <div class="card p-3 mb-4" id="updateBurgerForm" style="display:none;">
-            <h4>Update Burger</h4>
-            <input type="text" id="updateName" class="form-control mb-2" placeholder="Enter New Name">
-            <input type="number" id="updatePrice" class="form-control mb-2" placeholder="Enter New Price">
-            <input type="text" id="updateDescription" class="form-control mb-2" placeholder="Enter New Description">
-            <input type="text" id="updateImageUrl" class="form-control mb-2" placeholder="Enter New Image URL">
-            <input type="text" id="updateAvailable" class="form-control mb-2" placeholder="Enter New Availability">
-            <button class="btn btn-warning" onclick="updateBurgerDetails()">Update Burger</button>
-            <button class="btn btn-secondary" onclick="cancelUpdate()">Cancel</button>
-        </div>
+            <!-- Search Burger Form -->
+            <div class="card p-3 mb-4">
+                <h4>Search Burger</h4>
+                <input type="text" id="searchBurger" class="form-control mb-2" placeholder="Enter Burger Name">
+                <button class="btn btn-primary" onclick="searchBurger()">Search</button>
+                <button class="btn btn-outline-secondary" onclick="loadBurger()">Clear Search</button>
+            </div>
 
-        <!-- Search Burger Form -->
-        <div class="card p-3 mb-4">
-            <h4>Search Burger</h4>
-            <input type="text" id="searchBurger" class="form-control mb-2" placeholder="Enter Burger Name">
-            <button class="btn btn-primary" onclick="searchBurger()">Search</button>
-        </div>
+            <button class="btn btn-primary mb-3" onclick="loadBurger()">Reload Data</button>
 
-        <button class="btn btn-primary mb-3" onclick="loadBurger()">Reload Data</button>
-
-        <!-- Burger Table -->
-        <div class="table-responsive">
-            <table class="table table-bordered table-striped">
-                <thead class="table-dark">
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Price</th>
-                        <th>Description</th>
-                        <th>Image URL</th>
-                        <th>Available</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody id="burgerTableBody"></tbody>
-            </table>
+            <!-- Burger Table -->
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Description</th>
+                            <th>Image</th>
+                            <th>Available</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="burgerTableBody"></tbody>
+                </table>
+            </div>
         </div>
     </div>
 
-    <script src="burger.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="burger.js"></script>
 </body>
 </html>
