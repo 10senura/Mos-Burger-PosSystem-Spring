@@ -1,0 +1,58 @@
+[
+    {
+        "chiken_id": 1,
+        "name": "chicken leg",
+        "price": 5000.0,
+        "description": " added sose",
+        "image_url": "img/chicken/chiken leg.jpeg",
+        "available": "yes"
+    },
+    {
+        "chiken_id": 2,
+        "name": "chicken plate",
+        "price": 7000.0,
+        "description": "friy",
+        "image_url": "img/chicken/2.jpeg",
+        "available": "yes"
+    },
+    {
+        "chiken_id": 4,
+        "name": "chicken (special)",
+        "price": 7000.0,
+        "description": "added sose",
+        "image_url": "img/chicken/5.jpg",
+        "available": "yes"
+    },
+    {
+        "chiken_id": 5,
+        "name": "chicken leg (special)",
+        "price": 12000.0,
+        "description": "added sose",
+        "image_url": "img/chicken/6.jpg",
+        "available": "yes"
+    },
+    {
+        "chiken_id": 6,
+        "name": "chicken arm",
+        "price": 2500.0,
+        "description": "added sose",
+        "image_url": "img/chicken/1.jpg",
+        "available": "yes"
+    },
+    {
+        "chiken_id": 8,
+        "name": "chicken (special)",
+        "price": 7000.0,
+        "description": "added sose",
+        "image_url": "img/chicken/6.jpg",
+        "available": "yes"
+    },
+    {
+        "chiken_id": 9,
+        "name": "chicken (special)",
+        "price": 12000.0,
+        "description": "added sose",
+        "image_url": "img/chicken/6.jpg",
+        "available": "yes"
+    }
+]

@@ -1,0 +1,42 @@
+[
+    {
+        "fries_id": 1,
+        "name": "hot chees fries",
+        "price": 3000.0,
+        "description": " meadiem",
+        "image_url": "img/fries/hot chees fries.jpg",
+        "available": "yes"
+    },
+    {
+        "fries_id": 2,
+        "name": "Cup chees fries",
+        "price": 3000.0,
+        "description": " cup of sese",
+        "image_url": "img/fries/1.jpg",
+        "available": "yes"
+    },
+    {
+        "fries_id": 3,
+        "name": " Chicken fries",
+        "price": 3000.0,
+        "description": " added sese and kochchi",
+        "image_url": "img/fries/2.jpg",
+        "available": "yes"
+    },
+    {
+        "fries_id": 4,
+        "name": " Cup of fries",
+        "price": 3000.0,
+        "description": " added sese and kochchi",
+        "image_url": "img/fries/4.jpg",
+        "available": "yes"
+    },
+    {
+        "fries_id": 5,
+        "name": " Plate of fries",
+        "price": 3000.0,
+        "description": " added sese and kochchi",
+        "image_url": "img/fries/5.jpg",
+        "available": "yes"
+    }
+]

@@ -1,0 +1,74 @@
+[
+    {
+        "submarine_id": 1,
+        "name": "chees Submarine",
+        "price": 2500.0,
+        "description": " large add chess",
+        "image_url": "img/submarine/chees sumberine.jpg",
+        "available": "yes"
+    },
+    {
+        "submarine_id": 2,
+        "name": "vej Submarine",
+        "price": 1500.0,
+        "description": " large add chess",
+        "image_url": "img/submarine/1.jpg",
+        "available": "yes"
+    },
+    {
+        "submarine_id": 3,
+        "name": "Aeg Submarine",
+        "price": 1500.0,
+        "description": "added iniyen and age",
+        "image_url": "img/submarine/2.jpg",
+        "available": "yes"
+    },
+    {
+        "submarine_id": 4,
+        "name": "Tometo Submarine",
+        "price": 1500.0,
+        "description": "added iniyen and sose",
+        "image_url": "img/submarine/3.jpg",
+        "available": "yes"
+    },
+    {
+        "submarine_id": 5,
+        "name": "Chicken and Aeg Submarine",
+        "price": 1500.0,
+        "description": "added chicken",
+        "image_url": "img/submarine/4.jpg",
+        "available": "yes"
+    },
+    {
+        "submarine_id": 6,
+        "name": " Submarine(special)",
+        "price": 1500.0,
+        "description": "added chicken",
+        "image_url": "img/submarine/5.jpg",
+        "available": "yes"
+    },
+    {
+        "submarine_id": 7,
+        "name": " chees Submarine(special)",
+        "price": 1500.0,
+        "description": "added chicken",
+        "image_url": "img/submarine/6.jpg",
+        "available": "yes"
+    },
+    {
+        "submarine_id": 8,
+        "name": " ship Submarine(special)",
+        "price": 1500.0,
+        "description": "added vej and chicken",
+        "image_url": "img/submarine/7.jpg",
+        "available": "yes"
+    },
+    {
+        "submarine_id": 9,
+        "name": "  Submarine(special)",
+        "price": 1500.0,
+        "description": "added vej and chicken",
+        "image_url": "img/submarine/9.jpg",
+        "available": "yes"
+    }
+]

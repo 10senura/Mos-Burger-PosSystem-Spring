@@ -1,0 +1,50 @@
+[
+    {
+        "bevarages_id": 1,
+        "name": "mirinda",
+        "price": 1250.0,
+        "description": " 1L",
+        "image_url": "img/bevarages/mirinda.jpg",
+        "available": "yes"
+    },
+    {
+        "bevarages_id": 5,
+        "name": "cola",
+        "price": 150.0,
+        "description": " 500ml",
+        "image_url": "img/bevarages/coca.jpg",
+        "available": "yes"
+    },
+    {
+        "bevarages_id": 7,
+        "name": "sprite",
+        "price": 800.0,
+        "description": " tin",
+        "image_url": "img/bevarages/sprite.jpg",
+        "available": "yes"
+    },
+    {
+        "bevarages_id": 8,
+        "name": "pepsi",
+        "price": 1900.0,
+        "description": " 2L",
+        "image_url": "img/bevarages/pepsi.jpeg",
+        "available": "yes"
+    },
+    {
+        "bevarages_id": 9,
+        "name": "cola",
+        "price": 1600.0,
+        "description": " 1L",
+        "image_url": "img/bevarages/coca 2.jpg",
+        "available": "yes"
+    },
+    {
+        "bevarages_id": 12,
+        "name": "pepsi",
+        "price": 1600.0,
+        "description": " tin",
+        "image_url": "img/bevarages/pepsi.jpeg",
+        "available": "yes"
+    }
+]

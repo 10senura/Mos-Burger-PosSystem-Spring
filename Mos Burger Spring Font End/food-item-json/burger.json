@@ -1,0 +1,106 @@
+[
+    {
+        "burger_id": 1,
+        "name": "baken burger ",
+        "price": 300.0,
+        "description": "blend of spices and fresh ingredients.",
+        "image_url": "img/burger/baken burger.jpeg ",
+        "available": "yes"
+    },
+    {
+        "burger_id": 2,
+        "name": "cheese burger",
+        "price": 1400.0,
+        "description": " Burge added sose",
+        "image_url": "img/burger/cheese burger.jpeg",
+        "available": "yes"
+    },
+    {
+        "burger_id": 4,
+        "name": "chicken-burger",
+        "price": 1500.0,
+        "description": " Burger (smole)",
+        "image_url": "img/burger/chicken-burger.jpg",
+        "available": "yes"
+    },
+    {
+        "burger_id": 5,
+        "name": "vegiterble Burger ",
+        "price": 500.0,
+        "description": " Burger (large)",
+        "image_url": "img/burger/Double Cheese n Chicken Submarine.jpeg",
+        "available": "yes"
+    },
+    {
+        "burger_id": 6,
+        "name": " chicken chees Burger",
+        "price": 3000.0,
+        "description": " add inoin and vej",
+        "image_url": "img/burger/chicken-burgers- large.jpg",
+        "available": "yes"
+    },
+    {
+        "burger_id": 7,
+        "name": " classic burger new",
+        "price": 3000.0,
+        "description": " added sose and chicken",
+        "image_url": "img/burger/classic burger new.jpeg",
+        "available": "yes"
+    },
+    {
+        "burger_id": 9,
+        "name": "crisphy chicken burger",
+        "price": 1400.0,
+        "description": "Regular",
+        "image_url": "img/burger/crisphy chicken burger.jpeg",
+        "available": "yes"
+    },
+    {
+        "burger_id": 10,
+        "name": "Double Cheese n Chicken",
+        "price": 3000.0,
+        "description": " added chees and sose",
+        "image_url": "img/burger/double cheese burger.jpeg",
+        "available": "yes"
+    },
+    {
+        "burger_id": 11,
+        "name": "olive burger new",
+        "price": 3000.0,
+        "description": " added vej and chicken",
+        "image_url": "img/burger/olive burger new.jpeg",
+        "available": "no"
+    },
+    {
+        "burger_id": 12,
+        "name": "olive burger",
+        "price": 1500.0,
+        "description": " added olio oil",
+        "image_url": "img/burger/olive burger.jpg",
+        "available": "yes"
+    },
+    {
+        "burger_id": 13,
+        "name": "paneer burger",
+        "price": 5000.0,
+        "description": " added inon",
+        "image_url": "img/burger/paneer burger.jpeg",
+        "available": "no"
+    },
+    {
+        "burger_id": 16,
+        "name": "shawarma burger",
+        "price": 5000.0,
+        "description": "shawarma added sose",
+        "image_url": "img/burger/shawarma burger.jpeg",
+        "available": "no"
+    },
+    {
+        "burger_id": 17,
+        "name": "turkey burger",
+        "price": 5000.0,
+        "description": "shawarma added sose",
+        "image_url": "img/burger/turkey burger.jpeg",
+        "available": "no"
+    }
+]
