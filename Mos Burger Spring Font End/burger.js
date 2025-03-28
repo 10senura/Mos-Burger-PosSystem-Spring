@@ -63,13 +63,13 @@ function displayBurgers(burgers) {
     burgers.forEach(burger => {
         const row = `<tr>
             <td>${burger.burger_id}</td>
-            <td>${burger.b_name || burger.name}</td>
+            <td>${burger.name}</td>
             <td>$${parseFloat(burger.price).toFixed(2)}</td>
             <td>${burger.description}</td>
-            <td><img src="${burger.image_url}" alt="${burger.b_name || burger.name}" style="max-width: 100px;"></td>
+            <td><img src="${burger.image_url}" alt="${burger.name}" style="max-width: 100px;"></td>
             <td>${burger.available ? '✅ Available' : '❌ Not Available'}</td>
             <td>
-                <button class="btn btn-warning btn-sm" onclick="editBurger(${burger.burger_id}, '${burger.b_name || burger.name}', ${burger.price}, '${burger.description}', '${burger.image_url}', ${burger.available})">Update</button>
+                <button class="btn btn-warning btn-sm" onclick="editBurger(${burger.burger_id}, '${burger.name}', ${burger.price}, '${burger.description}', '${burger.image_url}', ${burger.available})">Update</button>
                 <button class="btn btn-danger btn-sm" onclick="deleteBurger(${burger.burger_id})">Delete</button>
             </td>
         </tr>`;
@@ -108,21 +108,82 @@ async function addBurger() {
         formData.append('price', price);
         formData.append('description', description);
         formData.append('available', available);
-        formData.append('image', file);  // Keep as 'image' for backend processing
+        formData.append('image', file);  async function addBurger() {
+            const statusElement = document.getElementById('addStatus');
+            statusElement.innerHTML = '<div class="alert alert-info">Processing your request...</div>';
+        
+            try {
+                // Get form values
+                const name = document.getElementById("burgerName").value.trim();
+                const price = parseFloat(document.getElementById("burgerPrice").value);
+                const description = document.getElementById("burgerDescription").value.trim();
+                const available = document.getElementById("burgerAvailable").value; 
+                const file = fileInput.files[0];
+        
+                if (!name || isNaN(price) || !description || !file) {
+                    throw new Error('Please fill all fields with valid values');
+                }
+        
+                if (price <= 0) {
+                    throw new Error('Price must be greater than 0');
+                }
+        
+                if (file.size > 2 * 1024 * 1024) {
+                    throw new Error('Image size must be less than 2MB');
+                }
+        
+                const formData = new FormData();
+                formData.append('name', name);
+                formData.append('price', price);
+                formData.append('description', description);
+                formData.append('available', available);
+                formData.append('image', file);
+        
+                // Debug: Log FormData contents
+                for (let [key, value] of formData.entries()) {
+                    console.log(key, value);
+                }
+        
+                const response = await fetch("http://localhost:8080/burgers/addBurger", {
+                    method: "POST",
+                    body: formData
+                });
+        
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.message || 'Failed to add burger');
+                }
+        
+                const result = await response.json();
+                console.log("Server response:", result);
+        
+                statusElement.innerHTML = `<div class="alert alert-success">${result.message || 'Burger added successfully!'}</div>`;
+                
+                document.getElementById("burgerName").value = '';
+                document.getElementById("burgerPrice").value = '';
+                document.getElementById("burgerDescription").value = '';
+                document.getElementById("burgerAvailable").value = '';
+                document.getElementById("burgerImageUpload").value = '';
+                document.getElementById("imagePreview").style.display = 'none';
+                
+                await loadBurger();
+                
+            } catch (error) {
+                console.error("Add Burger Error:", error);
+                statusElement.innerHTML = `<div class="alert alert-danger">Error: ${error.message}</div>`;
+            }
+        }
 
-        // Debug: Log what we're sending
         console.log("Sending burger data:", {
             b_name, price, description, available,
             image: file.name, size: file.size
         });
 
-        // Send request to server
         const response = await fetch("http://localhost:8080/burgers/addBurger", {
             method: "POST",
             body: formData
         });
 
-        // Check response
         if (!response.ok) {
             const errorData = await response.json();
             throw new Error(errorData.message || 'Failed to add burger');
@@ -131,10 +192,8 @@ async function addBurger() {
         const result = await response.json();
         console.log("Server response:", result);
 
-        // Success case
         statusElement.innerHTML = `<div class="alert alert-success">${result.message || 'Burger added successfully!'}</div>`;
         
-        // Reset form
         document.getElementById("burgerName").value = '';
         document.getElementById("burgerPrice").value = '';
         document.getElementById("burgerDescription").value = '';
@@ -142,14 +201,12 @@ async function addBurger() {
         document.getElementById("burgerImageUpload").value = '';
         document.getElementById("imagePreview").style.display = 'none';
         
-        // Reload burger list
         await loadBurger();
         
     } catch (error) {
         console.error("Add Burger Error:", error);
         statusElement.innerHTML = `<div class="alert alert-danger">Error: ${error.message}</div>`;
         
-        // Additional error details
         if (error.response) {
             console.error("Server response:", await error.response.json());
         }

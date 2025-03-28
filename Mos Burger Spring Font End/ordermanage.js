@@ -105,3 +105,4 @@ function deleteOrder(order_id) {
             .then(() => loadOrders());
     }
 }
+
