@@ -16,7 +16,6 @@ function displayOrders(orders) {
     orders.forEach(order => {
         const row = `<tr>
             <td>${order.order_id}</td>
-            <td>${order.burger_id}</td>
             <td>${order.c_name}</td>
             <td>${order.order_date}</td>
             <td>${order.order_status}</td>
@@ -32,7 +31,6 @@ function displayOrders(orders) {
 }
 
 function addOrder() {
-    const burger_id = document.getElementById("orderBurgerId").value;
     const c_name = document.getElementById("orderCustomerName").value;
     const order_date = document.getElementById("orderDate").value;
     const order_status = document.getElementById("orderStatus").value;
@@ -67,7 +65,6 @@ function searchOrderByName() {
 function editOrder(order_id, burger_id, c_name, order_date, order_status, quantity, order_name) {
     currentOrderId = order_id;
     document.getElementById("updateOrderId").value = order_id;
-    document.getElementById("updateBurgerId").value = burger_id;
     document.getElementById("updateCustomerName").value = c_name;
     document.getElementById("updateOrderDate").value = order_date;
     document.getElementById("updateOrderStatus").value = order_status;
@@ -77,7 +74,6 @@ function editOrder(order_id, burger_id, c_name, order_date, order_status, quanti
 }
 
 function updateOrderDetails() {
-    const burger_id = document.getElementById("updateBurgerId").value;
     const c_name = document.getElementById("updateCustomerName").value;
     const order_date = document.getElementById("updateOrderDate").value;
     const order_status = document.getElementById("updateOrderStatus").value;
