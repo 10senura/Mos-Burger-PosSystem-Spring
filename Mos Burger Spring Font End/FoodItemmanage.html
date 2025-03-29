@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Item Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: #f4f4f4;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .card {
+            width: 200px;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            cursor: pointer;
+            text-align: center;
+            transition: 0.3s;
+        }
+        .card:hover {
+            transform: scale(1.05);
+        }
+        .card img {
+            width: 100%;
+            border-radius: 8px;
+        }
+        .add-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .menu-item {
+            display: inline-block;
+            padding: 10px;
+            background: #007bff;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Food Item Management</h2>
+    <div class="container">
+        <div class="card" onclick="openFoodPage('Pizza')">
+            <img src="pizza.jpg" alt="Pizza">
+            <h3>Pizza</h3>
+        </div>
+        <div class="card" onclick="openFoodPage('Burger')">
+            <img src="burger.jpg" alt="Burger">
+            <h3>Burger</h3>
+        </div>
+        <div class="card" onclick="openFoodPage('Pasta')">
+            <img src="pasta.jpg" alt="Pasta">
+            <h3>Pasta</h3>
+        </div>
+        <div class="card" onclick="openFoodPage('Salad')">
+            <img src="salad.jpg" alt="Salad">
+            <h3>Salad</h3>
+        </div>
+    </div>
+    <button class="add-button" onclick="addFoodItem()">Add New Food</button>
+    <a class="menu-item" onclick="showItems()">Go to Order Management</a>
+
+    <script>
+      
+        function openFoodPage(foodName) {
+            if (foodName === 'Burger') {
+                window.location.href = 'burgerManage.html';  
+            } else {
+                window.location.href = `food-details.html?food=${foodName}`; 
+            }
+        }
+        
+        function addFoodItem() {
+            alert("Feature to add new food items coming soon!");
+        }
+        
+        function showItems() {
+            window.location.href = 'orderManage.html';
+        }
+    </script>
+</body>
+</html>

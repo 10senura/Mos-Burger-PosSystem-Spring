@@ -157,3 +157,6 @@ function adjustCartQty(index, change) {
     }
     updateCart();
 }
+function openTablePage() {
+  window.location.href = 'FoodItemmanage.html';  
+}
