@@ -61,21 +61,21 @@
 <body>
     <h2>Food Item Management</h2>
     <div class="container">
-        <div class="card" onclick="openFoodPage('Pizza')">
-            <img src="pizza.jpg" alt="Pizza">
-            <h3>Pizza</h3>
+        <div class="card" onclick="openFoodPage('chicken')">
+            <img src="img/chicken/1.jpg" alt="chicken">
+            <h3>Chicken</h3>
         </div>
         <div class="card" onclick="openFoodPage('Burger')">
-            <img src="burger.jpg" alt="Burger">
+            <img src="img/burger/cheese burger.jpeg" alt="Burger">
             <h3>Burger</h3>
         </div>
         <div class="card" onclick="openFoodPage('Pasta')">
-            <img src="pasta.jpg" alt="Pasta">
+            <img src="img/fries/1.jpg" alt="Pasta">
             <h3>Pasta</h3>
         </div>
-        <div class="card" onclick="openFoodPage('Salad')">
-            <img src="salad.jpg" alt="Salad">
-            <h3>Salad</h3>
+        <div class="card" onclick="openFoodPage('Bevarages')">
+            <img src="img/bevarages/pepsi.jpeg" alt="bevarages">
+            <h3>Bevarages</h3>
         </div>
     </div>
     <button class="add-button" onclick="addFoodItem()">Add New Food</button>
@@ -86,10 +86,14 @@
         function openFoodPage(foodName) {
             if (foodName === 'Burger') {
                 window.location.href = 'burgerManage.html';  
+            } else if (foodName === 'Pasta') {
+                window.location.href = 'pasta.html';  
+            } else if(foodName === 'Bevarages') {
+                window.location.href = 'beverage.html';  
             } else {
                 window.location.href = `food-details.html?food=${foodName}`; 
             }
-        }
+     }
         
         function addFoodItem() {
             alert("Feature to add new food items coming soon!");
