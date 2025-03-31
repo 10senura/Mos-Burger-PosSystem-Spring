@@ -27,7 +27,7 @@ function displayBurgers(burgerList) {
     if (!burgerList || burgerList.length === 0) {
         tableBody.innerHTML = `
             <tr>
-                <td colspan="7" class="text-center py-4 text-muted">
+                <td colspan="8" class="text-center py-4 text-muted">
                     <i class="bi bi-exclamation-circle fs-1"></i>
                     <p class="mt-2 mb-0">No burgers found</p>
                 </td>
@@ -40,6 +40,7 @@ function displayBurgers(burgerList) {
         row.innerHTML = `
             <td>${burger.burger_id}</td>
             <td>${burger.name}</td>
+            <td>${burger.qty || 0}</td>
             <td>$${burger.price.toFixed(2)}</td>
             <td>${burger.description || '-'}</td>
             <td>
@@ -55,7 +56,7 @@ function displayBurgers(burgerList) {
             <td>
                 <div class="d-flex gap-2">
                     <button class="btn btn-sm btn-outline-danger" 
-                        onclick="editBurger(${burger.burger_id}, '${escapeHtml(burger.name)}', ${burger.price}, 
+                        onclick="editBurger(${burger.burger_id}, '${escapeHtml(burger.name)}', ${burger.qty || 0}, ${burger.price}, 
                         '${escapeHtml(burger.description)}', '${escapeHtml(burger.image_url)}', '${burger.available}')">
                         <i class="bi bi-pencil-square"></i> Edit
                     </button>
@@ -72,6 +73,7 @@ function displayBurgers(burgerList) {
 function addBurger() {
     const burgerData = {
         name: document.getElementById("burgerName").value.trim(),
+        qty: parseInt(document.getElementById("burgerQty").value) || 0,
         price: parseFloat(document.getElementById("burgerPrice").value),
         description: document.getElementById("burgerDescription").value.trim(),
         image_url: document.getElementById("burgerImageUrl").value.trim(),
@@ -97,7 +99,9 @@ function addBurger() {
     .then(() => {
         showAlert("success", "Burger added successfully!");
         loadBurger();
+        // Clear form
         document.getElementById("burgerName").value = "";
+        document.getElementById("burgerQty").value = "";
         document.getElementById("burgerPrice").value = "";
         document.getElementById("burgerDescription").value = "";
         document.getElementById("burgerImageUrl").value = "";
@@ -129,10 +133,11 @@ function searchBurger() {
         });
 }
 
-function editBurger(id, name, price, description, image_url, available) {
+function editBurger(id, name, qty, price, description, image_url, available) {
     currentBurgerId = id;
     document.getElementById("updateBurgerId").value = id;
     document.getElementById("updateBurgerName").value = name;
+    document.getElementById("updateBurgerQty").value = qty;
     document.getElementById("updateBurgerPrice").value = price;
     document.getElementById("updateBurgerDescription").value = description;
     document.getElementById("updateBurgerImageUrl").value = image_url;
@@ -146,6 +151,7 @@ function updateBurgerDetails() {
     const burgerData = {
         burger_id: currentBurgerId,
         name: document.getElementById("updateBurgerName").value.trim(),
+        qty: parseInt(document.getElementById("updateBurgerQty").value) || 0,
         price: parseFloat(document.getElementById("updateBurgerPrice").value),
         description: document.getElementById("updateBurgerDescription").value.trim(),
         image_url: document.getElementById("updateBurgerImageUrl").value.trim(),

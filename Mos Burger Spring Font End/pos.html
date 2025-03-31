@@ -3,278 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Restaurant Ordering System</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="orderstyle.css">
-
+    <title>Restaurant POS System</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="posstyle.css">
 </head>
 <body>
-    <div class="container">
-        <div class="sidebar">
-            <div class="logo">
-                <img src="img/logo.png" alt="Logo">
-            </div>
-            <div class="menu">
-                <a class="menu-item" onclick="showItems('burger')"><i class="home-icon"></i></a>
-                <a class="menu-item" onclick="showItems(window.location.href='orderManage.html')"><i class="food-icon"></i></a>
-                <a href="#" class="menu-item" onclick="openTablePage()"><i class="table-icon"></i class="food-icon"></a>
-                <a href="#" class="menu-item"><i class="chart-icon"></i></a>
-                <a href="#" class="menu-item"><i class="logout-icon"></i></a>  
-            </div>
+    <div class="sidebar">
+        <div class="logo">
+            <img src="img/logo.png" alt="Logo">
         </div>
-
-
-        <div class="main">
-            <div class="content">
-                <div class="header">
-                    <input 
-                        type="text" 
-                        placeholder="Search Name" 
-                        class="search-bar" 
-                        id="search-bar" 
-                        onkeyup="searchItems()"/>
-                    <div class="user-options">
-                    </div>
-                </div>
-                
-                <div class="categories">
-                    <button class="category-btn" onclick="showItems('burger')">Burger</button>
-                    <button class="category-btn" onclick="showItems('pasta')">Pasta</button>
-                    <button class="category-btn" onclick="showItems('Fries')">Fries</button>
-                    <button class="category-btn" onclick="showItems('submarine')">Submarine</button>
-                    <button class="category-btn" onclick="showItems('Chiken')">Chiken</button>
-                    <button class="category-btn" onclick="showItems('Bevarages')">Bevarages</button>
-
-                </div>
-                <div id="itemmenu" class="items" >
-                    
-                  <!-- item add area -->    
-                  <div class="itemaddarea visible" id="itemaddarea">
-                   </div>
-                    </div>
-
-                 <!-- Pasta Item Card -->
-                <div class="item pasta visible">
-                    <div class="item-details">
-                        <button class="add-btn" onclick="showQuantityModal('Chicken n Cheese Pasta', 1500, 'img/pasta/chicken-cheese-pasta.jpg')">Add</button>
-                    </div>
-                </div>
-                    <!-- end pasta items -->
-
-                    <div class="item Fries">
-                        <button class="add-btn"onclick="addToCart('Steak Fries (Large)  Rs. 1200.00',1200)">Add</button>
-                    </div>
-                
-                     <!-- end fries items -->
-                    <div class="item submarine">
-                        <button class="add-btn"onclick="addToCart('Crispy Chicken Submarine (Large) Rs. 2000.00',2000)">Add</button>
-                    </div>
-                    </div> 
-                    <!-- end submarine items -->
-                    <div class="item Chiken">
-                        <button class="add-btn"onclick="addToCart('Fried Chicken (Small) Rs. 1200.00',1200)">Add</button>
-                    </div>
-                    </div>  
-
-
-                    <div class="item Bevarages">
-                        <button class="add-btn"onclick="addToCart(' Pepsi (330ml) Rs. 990.00',990)">Add</button>
-                    </div>  
-                    </div>  
-                </div>        
-            </div>
-            
-<div id="cart-container">
-    <h2>New Order <button onclick="clearCart()">Clear</button></h2>
-    <div class="order-items" id="cart">
-        <p>No items in the cart.</p>
-    </div>
-    <div id="total">Total: Rs.0</div>
-    <button class="payment-btn" id="buy-button" onclick="showOrderModal()">Place Order</button>
-</div>
-
-<div id="orderModal" class="modal">
-    <div class="modal-content">
-        <span class="close" onclick="closeOrderModal()">&times;</span>
-        <h2>Customer Details</h2>
-        <input type="text" id="customerName" placeholder="Enter Customer Name" required>
-        <button onclick="submitOrder()">Confirm Order</button>
-    </div>
-</div>
-
-<script>
-let cart = [];
-
-function addToCart(itemName, itemPrice) {
-    const existingItem = cart.find(item => item.name === itemName);
-    
-    if(existingItem) {
-        existingItem.quantity++;
-    } else {
-        cart.push({
-            name: itemName,
-            price: itemPrice,
-            quantity: 1
-        });
-    }
-    updateCartDisplay();
-}
-
-function updateCartDisplay() {
-    const cartContainer = document.getElementById('cart');
-    const totalElement = document.getElementById('total');
-    
-    cartContainer.innerHTML = '';
-    
-    if(cart.length === 0) {
-        cartContainer.innerHTML = '<p>No items in the cart.</p>';
-        totalElement.textContent = 'Total: Rs.0';
-        return;
-    }
-    
-    cart.forEach((item, index) => {
-        const itemElement = document.createElement('div');
-        itemElement.className = 'cart-item';
-        itemElement.innerHTML = `
-            <div class="item-info">
-                <h4>${item.name}</h4>
-                <p>Rs.${item.price} x ${item.quantity}</p>
-                <div class="item-controls">
-                    <button onclick="adjustQuantity(${index}, -1)">-</button>
-                    <span>${item.quantity}</span>
-                    <button onclick="adjustQuantity(${index}, 1)">+</button>
-                    <button onclick="removeItem(${index})">Remove</button>
-                </div>
-            </div>
-        `;
-        cartContainer.appendChild(itemElement);
-    });
-    
-    const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    totalElement.textContent = `Total: Rs.${total}`;
-}
-
-function adjustQuantity(index, change) {
-    cart[index].quantity += change;
-    if(cart[index].quantity < 1) cart.splice(index, 1);
-    updateCartDisplay();
-}
-
-function removeItem(index) {
-    cart.splice(index, 1);
-    updateCartDisplay();
-}
-
-function clearCart() {
-    cart = [];
-    updateCartDisplay();
-}
-
-function showOrderModal() {
-    if(cart.length === 0) {
-        alert('Please add items to cart first!');
-        return;
-    }
-    document.getElementById('orderModal').style.display = 'block';
-}
-
-function closeOrderModal() {
-    document.getElementById('orderModal').style.display = 'none';
-}
-
-async function submitOrder() {
-    const customerName = document.getElementById('customerName').value;
-    if(!customerName) {
-        alert('Please enter customer name!');
-        return;
-    }
-
-    const orderData = {
-        customer: customerName,
-        items: cart,
-        total: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0),
-        date: new Date().toISOString(),
-        status: 'Pending'
-    };
-
-    try {
-        const response = await fetch('http://localhost:8080/orders/addOrder', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(orderData),
-        });
-
-        if(response.ok) {
-            alert('Order placed successfully!');
-            clearCart();
-            closeOrderModal();
-            window.location.href = 'orderManage.html';
-        }
-    } catch (error) {
-        console.error('Error:', error);
-    }
-}
-</script>       
+        <div class="menu">
+            <a class="menu-item" onclick="showItems('burger')">
+                <i class="bi bi-house"></i>
+                <span class="menu-text">Home</span>
+            </a>
+            <a class="menu-item" onclick="window.location.href='orderManage.html'">
+                <i class="bi bi-list-check"></i>
+                <span class="menu-text">Orders</span>
+            </a>
+            <a class="menu-item" onclick="openTablePage()">
+                <i class="bi bi-plus-circle"></i>
+                <span class="menu-text">Add Items</span>
+            </a>
+            <a class="menu-item" href="#">
+                <i class="bi bi-graph-up"></i>
+                <span class="menu-text">Reports</span>
+            </a>
+            <a class="menu-item" href="#">
+                <i class="bi bi-box-arrow-right"></i>
+                <span class="menu-text">Logout</span>
+            </a>
         </div>
     </div>
 
-
-
- <div id="buyModal" class="modal">
-    <div class="modal-content">
-        <span class="close" onclick="closeModal()">&times;</span>
-        <h2>Checkout</h2>
-        <p id="modal-total"></p>
-        <p id="modal-discount"></p>
-        <p id="modal-net"></p>
-        <button class="buy-now" onclick="generatePDF()">Buy Now</button>
-    </div>
-</div>
-
-
-
-             <div id="addItemModal" class="modal">
-                <div class="modal-content">
-                    <span class="close" onclick="closeAddItemModal()">&times;</span>
-                    <h2>Add Item</h2>
-                    <input type="text" id="newItemName" placeholder="Item Name"><br>
-                    <input type="number" id="newItemPrice" placeholder="Item Price"><br>
-                    <input type="text" id="newItemImg" placeholder="Item Image URL"><br>
-                    <button class="add-now" onclick="addItem()">Add Item</button>
-                </div>
+    <div class="main">
+        <div class="header">
+            <input type="text" placeholder="Search Name" class="search-bar" id="search-bar" onkeyup="searchItems()">
+            <div class="user-options">
+                <!-- User options can be added here -->
             </div>
+        </div>
+        
+        <div class="categories">
+            <button class="category-btn active" onclick="showItems('burger')">Burger</button>
+            <button class="category-btn" onclick="showItems('pasta')">Pasta</button>
+            <button class="category-btn" onclick="showItems('Fries')">Fries</button>
+            <button class="category-btn" onclick="showItems('submarine')">Submarine</button>
+            <button class="category-btn" onclick="showItems('Chiken')">Chicken</button>
+            <button class="category-btn" onclick="showItems('Bevarages')">Beverages</button>
+        </div>
+        
+        <div class="items" id="itemmenu">
+            <!-- Items will be loaded dynamically -->
+        </div>
+    </div>
 
+    <!-- Cart Container -->
+    <div id="cart-container">
+        <h2>Current Order <button onclick="clearCart()" style="float: right; background: none; border: none; color: var(--primary-color); cursor: pointer;">Clear</button></h2>
+        <div class="order-items" id="cart">
+            <p>No items in the cart.</p>
+        </div>
+        <div id="total">Total: Rs.0</div>
+        <button class="payment-btn" id="buy-button" onclick="showOrderModal()">Place Order</button>
+    </div>
 
+    <!-- Order Modal -->
+    <div id="orderModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeOrderModal()">&times;</span>
+            <h2>Customer Details</h2>
+            <div class="mb-3">
+                <label for="customerName" class="form-label">Customer Name</label>
+                <input type="text" id="customerName" class="form-control" placeholder="Enter Customer Name" required>
+            </div>
+            <div class="mb-3">
+                <label for="customerPhone" class="form-label">Phone Number</label>
+                <input type="tel" id="customerPhone" class="form-control" placeholder="Enter Phone Number">
+            </div>
+            <div class="mb-3">
+                <label for="orderNotes" class="form-label">Order Notes</label>
+                <textarea id="orderNotes" class="form-control" rows="3" placeholder="Any special instructions?"></textarea>
+            </div>
+            <button class="btn btn-success w-100" onclick="submitOrder()">Confirm Order</button>
+        </div>
+    </div>
 
-
-
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
-
-    <script>
-        function showItems(type) {
-            
-            document.getElementById('itemaddarea').style.display = 'none';
-            
-            // Hide all menu items
-            const allItems = document.querySelectorAll('.item');
-            allItems.forEach(item => item.classList.remove('visible'));
-
-            // Show items of the selected type
-            const selectedItems = document.querySelectorAll('.' + type);
-            selectedItems.forEach(item => item.classList.add('visible'));
-        }
-
-        // On load, show burgers by default
-        document.addEventListener('DOMContentLoaded', () => {
-            showItems('burger');
-        });
-    </script>
+    <!-- Quantity Modal -->
+    <div id="quantityModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeQuantityModal()">&times;</span>
+            <img id="modalItemImage" src="" alt="Item Image">
+            <h3 id="modalItemName"></h3>
+            <p id="modalItemPrice"></p>
+            <div class="qty-controls">
+                <button onclick="adjustModalQty(-1)">-</button>
+                <input type="number" id="itemQty" value="1" min="1">
+                <button onclick="adjustModalQty(1)">+</button>
+            </div>
+            <button class="btn btn-primary" onclick="confirmAddToCart()">Add to Order</button>
+        </div>
+    </div>
     <script src="java.js"></script>
-    <script src="ordermanage.js"></script>
-
 </body>
 </html>
