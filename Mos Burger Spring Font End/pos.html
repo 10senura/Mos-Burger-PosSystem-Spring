@@ -69,26 +69,200 @@
         <button class="payment-btn" id="buy-button" onclick="showOrderModal()">Place Order</button>
     </div>
 
-    <!-- Order Modal -->
-    <div id="orderModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeOrderModal()">&times;</span>
-            <h2>Customer Details</h2>
-            <div class="mb-3">
-                <label for="customerName" class="form-label">Customer Name</label>
-                <input type="text" id="customerName" class="form-control" placeholder="Enter Customer Name" required>
-            </div>
-            <div class="mb-3">
-                <label for="customerPhone" class="form-label">Phone Number</label>
-                <input type="tel" id="customerPhone" class="form-control" placeholder="Enter Phone Number">
-            </div>
-            <div class="mb-3">
-                <label for="orderNotes" class="form-label">Order Notes</label>
-                <textarea id="orderNotes" class="form-control" rows="3" placeholder="Any special instructions?"></textarea>
-            </div>
-            <button class="btn btn-success w-100" onclick="submitOrder()">Confirm Order</button>
+  <!-- Order Modal -->
+<div id="orderModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeOrderModal()">&times;</span>
+        <h2>Order Details</h2>
+        
+        <!-- Customer Information -->
+        <div class="mb-3">
+            <label for="customerName" class="form-label">Customer Name *</label>
+            <input type="text" id="customerName" class="form-control" placeholder="John Doe" required>
         </div>
+        
+        <!-- Order Date -->
+        <div class="mb-3">
+            <label for="orderDate" class="form-label">Order Date *</label>
+            <input type="date" id="orderDate" class="form-control" value="<?php echo date('Y-m-d'); ?>" required>
+        </div>
+        
+        <!-- Quantity -->
+        <div class="mb-3">
+            <label for="quantity" class="form-label">Quantity *</label>
+            <input type="number" id="quantity" class="form-control" min="1" value="1" required>
+        </div>
+        
+        <!-- Order Status -->
+        <div class="mb-3">
+            <label for="orderStatus" class="form-label">Order Status *</label>
+            <select id="orderStatus" class="form-control" required>
+                <option value="pending">Pending</option>
+                <option value="preparing">Preparing</option>
+                <option value="ready">Ready for Pickup</option>
+                <option value="completed">Completed</option>
+                <option value="cancelled">Cancelled</option>
+            </select>
+        </div>
+        
+        <!-- Burger Selection (if needed) -->
+        <div class="mb-3" id="burgerSelection" style="display:none;">
+            <label for="burgerId" class="form-label">Select Burger</label>
+            <select id="burgerId" class="form-control">
+                <!-- Options will be loaded dynamically -->
+            </select>
+        </div>
+        
+        <button class="btn btn-success w-100" onclick="submitOrder()">Confirm Order</button>
     </div>
+</div>
+
+<style>
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%;
+    border-radius: 8px;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: black;
+}
+
+.form-label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.form-control {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.mb-3 {
+    margin-bottom: 15px;
+}
+
+.btn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-success {
+    background-color: #28a745;
+    color: white;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+}
+</style>
+
+<script>
+// Function to open the modal
+function openOrderModal(burgerId = null) {
+    document.getElementById('orderModal').style.display = 'block';
+    
+    // Set current date as default
+    document.getElementById('orderDate').valueAsDate = new Date();
+    
+    // If burgerId is provided, hide the selection and set the value
+    if(burgerId) {
+        document.getElementById('burgerSelection').style.display = 'none';
+        document.getElementById('burgerId').value = burgerId;
+    } else {
+        document.getElementById('burgerSelection').style.display = 'block';
+        // Load burgers from API
+        loadBurgers();
+    }
+}
+
+// Function to close the modal
+function closeOrderModal() {
+    document.getElementById('orderModal').style.display = 'none';
+}
+
+// Function to load burgers (if needed)
+function loadBurgers() {
+    fetch('/api/burgers')
+        .then(response => response.json())
+        .then(burgers => {
+            const select = document.getElementById('burgerId');
+            select.innerHTML = '';
+            burgers.forEach(burger => {
+                const option = document.createElement('option');
+                option.value = burger.id;
+                option.textContent = `${burger.name} - $${burger.price}`;
+                select.appendChild(option);
+            });
+        });
+}
+
+// Function to submit the order
+function submitOrder() {
+    const orderData = {
+        customerName: document.getElementById('customerName').value,
+        orderDate: document.getElementById('orderDate').value,
+        quantity: document.getElementById('quantity').value,
+        orderStatus: document.getElementById('orderStatus').value,
+        burgerId: document.getElementById('burgerId').value
+    };
+    
+    // Validate inputs
+    if(!orderData.customerName || !orderData.orderDate || !orderData.quantity) {
+        alert('Please fill all required fields');
+        return;
+    }
+    
+    // Send data to server
+    fetch('/api/orders', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(orderData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert('Order submitted successfully!');
+        closeOrderModal();
+        // Refresh orders table
+        loadOrders();
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error submitting order');
+    });
+}
+</script>
 
     <!-- Quantity Modal -->
     <div id="quantityModal" class="modal">
