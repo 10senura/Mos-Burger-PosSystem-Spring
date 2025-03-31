@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beverage Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Beverage Management</h2>
+
+        <!-- Add Beverage Form -->
+        <div class="card p-3 mb-4">
+            <h4>Add Beverage</h4>
+            <input type="text" id="bevName" class="form-control mb-2" placeholder="Enter Beverage Name">
+            <input type="number" id="bevPrice" class="form-control mb-2" placeholder="Enter Beverage Price">
+            <input type="text" id="bevDescription" class="form-control mb-2" placeholder="Enter Description">
+            <input type="text" id="bevImageUrl" class="form-control mb-2" placeholder="Enter Image URL">
+            <input type="text" id="bevAvailable" class="form-control mb-2" placeholder="Enter Availability (Yes/No)">
+            <button class="btn btn-success" onclick="addBeverage()">Add Beverage</button>
+        </div>
+
+        <!-- Update Beverage Form -->
+        <div class="card p-3 mb-4" id="updateBevForm" style="display:none;">
+            <h4>Update Beverage</h4>
+            <input type="text" id="updateBevName" class="form-control mb-2">
+            <input type="number" id="updateBevPrice" class="form-control mb-2">
+            <input type="text" id="updateBevDescription" class="form-control mb-2">
+            <input type="text" id="updateBevImageUrl" class="form-control mb-2">
+            <input type="text" id="updateBevAvailable" class="form-control mb-2">
+            <button class="btn btn-warning" onclick="updateBeverageDetails()">Update Beverage</button>
+            <button class="btn btn-secondary" onclick="cancelUpdate()">Cancel</button>
+        </div>
+
+        <!-- Search Beverage Form -->
+        <div class="card p-3 mb-4">
+            <h4>Search Beverage</h4>
+            <input type="text" id="searchBev" class="form-control mb-2" placeholder="Enter Beverage Name">
+            <button class="btn btn-primary" onclick="searchBeverage()">Search</button>
+        </div>
+
+        <button class="btn btn-primary mb-3" onclick="loadBeverage()">Reload Data</button>
+
+        <!-- Beverage Table -->
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Description</th>
+                        <th>Image URL</th>
+                        <th>Available</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="bevTableBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="bevarage.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

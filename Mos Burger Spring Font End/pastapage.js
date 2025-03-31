@@ -1,18 +1,17 @@
-// Base URL for the Pasta API
-const baseURL = 'http://localhost:8080/pastas';
+document.addEventListener("DOMContentLoaded", loadPasta);
 
-// Function to load all pastas from the backend
+let currentPastaId = null;
+
 function loadPasta() {
-    fetch(`${baseURL}/allPasta`)
-        .then(response => response.json())
-        .then(data => displayPasta(data))
-        .catch(error => console.error('Error loading pasta:', error));
+    fetch("http://localhost:8080/pasta/allPasta")
+        .then(res => res.json())
+        .then(data => displayPastas(data))
+        .catch(error => console.error("Error fetching pastas:", error));
 }
 
-// Function to display the list of pastas in the table
-function displayPasta(pastas) {
+function displayPastas(pastas) {
     const tableBody = document.getElementById("pastaTableBody");
-    tableBody.innerHTML = ""; // Clear previous table rows
+    tableBody.innerHTML = "";
 
     pastas.forEach(pasta => {
         const row = `<tr>
@@ -31,73 +30,118 @@ function displayPasta(pastas) {
     });
 }
 
-// Function to add a new pasta
 function addPasta() {
-    const name = document.getElementById("pastaName").value;
-    const price = document.getElementById("pastaPrice").value;
-    const description = document.getElementById("pastaDescription").value;
-    const image_url = document.getElementById("pastaImageUrl").value;
-    const available = document.getElementById("pastaAvailable").value;
+    const pastaData = {
+        name: document.getElementById("pastaName").value,
+        price: document.getElementById("pastaPrice").value,
+        description: document.getElementById("pastaDescription").value,
+        image_url: document.getElementById("pastaImageUrl").value,
+        available: document.getElementById("pastaAvailable").value
+    };
 
-    const newPasta = { name, price, description, image_url, available };
-
-    fetch(`${baseURL}/addPasta`, {
+    fetch("http://localhost:8080/pasta/addPasta", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newPasta),
-    }).then(() => loadPasta());
+        body: JSON.stringify(pastaData)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(() => {
+        loadPasta();
+        // Clear form fields
+        document.getElementById("pastaName").value = '';
+        document.getElementById("pastaPrice").value = '';
+        document.getElementById("pastaDescription").value = '';
+        document.getElementById("pastaImageUrl").value = '';
+        document.getElementById("pastaAvailable").value = '';
+    })
+    .catch(error => console.error("Error adding pasta:", error));
 }
 
-// Function to search pastas by name
 function searchPasta() {
     const name = document.getElementById("searchPasta").value;
-    fetch(`${baseURL}/search-by-name/${name}`)
-        .then(response => response.json())
-        .then(data => displayPasta(data))
-        .catch(error => console.error("Error searching pasta:", error));
+
+    if (!name.trim()) {
+        loadPasta();
+        return;
+    }
+
+    fetch(`http://localhost:8080/pasta/search-by-pasta-name/${name}`)
+        .then(res => {
+            if (!res.ok) {
+                throw new Error('Search failed');
+            }
+            return res.json();
+        })
+        .then(data => displayPastas(data))
+        .catch(error => {
+            console.error("Error searching pasta:", error);
+            alert("Pasta not found or search error occurred");
+        });
 }
 
-// Function to edit a pasta
-function editPasta(pasta_id, name, price, description, image_url, available) {
-    document.getElementById("updateName").value = name;
-    document.getElementById("updatePrice").value = price;
-    document.getElementById("updateDescription").value = description;
-    document.getElementById("updateImageUrl").value = image_url;
-    document.getElementById("updateAvailable").value = available;
-
+function editPasta(pastaId, name, price, description, image_url, available) {
+    currentPastaId = pastaId;
+    document.getElementById("updatePastaName").value = name;
+    document.getElementById("updatePastaPrice").value = price;
+    document.getElementById("updatePastaDescription").value = description;
+    document.getElementById("updatePastaImageUrl").value = image_url;
+    document.getElementById("updatePastaAvailable").value = available;
     document.getElementById("updatePastaForm").style.display = "block";
-    currentPastaId = pasta_id;
+    
+    // Scroll to update form
+    document.getElementById("updatePastaForm").scrollIntoView({ behavior: 'smooth' });
 }
 
-// Function to update a pasta's details
 function updatePastaDetails() {
-    const name = document.getElementById("updateName").value;
-    const price = document.getElementById("updatePrice").value;
-    const description = document.getElementById("updateDescription").value;
-    const image_url = document.getElementById("updateImageUrl").value;
-    const available = document.getElementById("updateAvailable").value;
+    const pastaData = {
+        pasta_id: currentPastaId,
+        name: document.getElementById("updatePastaName").value,
+        price: document.getElementById("updatePastaPrice").value,
+        description: document.getElementById("updatePastaDescription").value,
+        image_url: document.getElementById("updatePastaImageUrl").value,
+        available: document.getElementById("updatePastaAvailable").value
+    };
 
-    const updatedPasta = { pasta_id: currentPastaId, name, price, description, image_url, available };
-
-    fetch(`${baseURL}/updatePasta`, {
+    fetch("http://localhost:8080/pasta/updatePasta", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(updatedPasta),
-    }).then(() => {
+        body: JSON.stringify(pastaData)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Update failed');
+        }
+        return response.json();
+    })
+    .then(() => {
         loadPasta();
         cancelUpdate();
-    });
+    })
+    .catch(error => console.error("Error updating pasta:", error));
 }
 
 function cancelUpdate() {
     document.getElementById("updatePastaForm").style.display = "none";
+    currentPastaId = null;
 }
 
-function deletePasta(pasta_id) {
+function deletePasta(pastaId) {
     if (confirm("Are you sure you want to delete this pasta?")) {
-        fetch(`${baseURL}/delete/${pasta_id}`, { method: "DELETE" })
-            .then(() => loadPasta());
+        fetch(`http://localhost:8080/pasta/delete/${pastaId}`, { 
+            method: "DELETE" 
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Delete failed');
+            }
+            return response.json();
+        })
+        .then(() => loadPasta())
+        .catch(error => console.error("Error deleting pasta:", error));
     }
 }
-
-window.onload = loadPasta;

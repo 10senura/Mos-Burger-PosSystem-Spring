@@ -17,18 +17,18 @@
             <input type="number" id="pastaPrice" class="form-control mb-2" placeholder="Enter Pasta Price">
             <input type="text" id="pastaDescription" class="form-control mb-2" placeholder="Enter Description">
             <input type="text" id="pastaImageUrl" class="form-control mb-2" placeholder="Enter Image URL">
-            <input type="text" id="pastaAvailable" class="form-control mb-2" placeholder="Enter Availability">
+            <input type="text" id="pastaAvailable" class="form-control mb-2" placeholder="Enter Availability (Yes/No)">
             <button class="btn btn-success" onclick="addPasta()">Add Pasta</button>
         </div>
 
         <!-- Update Pasta Form -->
         <div class="card p-3 mb-4" id="updatePastaForm" style="display:none;">
             <h4>Update Pasta</h4>
-            <input type="text" id="updateName" class="form-control mb-2" placeholder="Enter New Name">
-            <input type="number" id="updatePrice" class="form-control mb-2" placeholder="Enter New Price">
-            <input type="text" id="updateDescription" class="form-control mb-2" placeholder="Enter New Description">
-            <input type="text" id="updateImageUrl" class="form-control mb-2" placeholder="Enter New Image URL">
-            <input type="text" id="updateAvailable" class="form-control mb-2" placeholder="Enter New Availability">
+            <input type="text" id="updatePastaName" class="form-control mb-2">
+            <input type="number" id="updatePastaPrice" class="form-control mb-2">
+            <input type="text" id="updatePastaDescription" class="form-control mb-2">
+            <input type="text" id="updatePastaImageUrl" class="form-control mb-2">
+            <input type="text" id="updatePastaAvailable" class="form-control mb-2">
             <button class="btn btn-warning" onclick="updatePastaDetails()">Update Pasta</button>
             <button class="btn btn-secondary" onclick="cancelUpdate()">Cancel</button>
         </div>
@@ -61,7 +61,7 @@
         </div>
     </div>
 
-    <script src="pasta.js"></script>
+    <script src="pastapage.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
