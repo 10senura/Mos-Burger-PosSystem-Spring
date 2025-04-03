@@ -142,7 +142,7 @@ function closeOrderModal() {
 
 // Function to load burgers (if needed)
 function loadBurgers() {
-    fetch('/api/burgers')
+    fetch("http://localhost:8080/burgers/addBurger")
         .then(response => response.json())
         .then(burgers => {
             const select = document.getElementById('burgerId');
@@ -173,7 +173,7 @@ function submitOrder() {
     }
     
     // Send data to server
-    fetch('/api/orders', {
+    fetch('http://localhost:8080/orders/addOrder', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -190,7 +190,7 @@ function submitOrder() {
     .catch(error => {
         console.error('Error:', error);
         alert('Error submitting order');
-    });
+    }); 
 }
 </script>
 
