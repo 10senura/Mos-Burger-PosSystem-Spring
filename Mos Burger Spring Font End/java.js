@@ -256,4 +256,67 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+async function submitOrder() {
+    const customerName = document.getElementById('customerName').value;
+    const orderDate = document.getElementById('orderDate').value;
+    const orderStatus = document.getElementById('orderStatus').value;
+    
+    if (!customerName) {
+        alert('Please enter customer name!');
+        return;
+    }
+
+    // Create order data for each item in cart
+    const orderPromises = cart.map(async (item) => {
+        const orderData = {
+            c_name: customerName,
+            order_date: orderDate,
+            order_status: orderStatus,
+            quantity: item.quantity,
+            burger_id: await getBurgerIdByName(item.name) // You need to implement this function
+        };
+
+        try {
+            const response = await fetch(API_ENDPOINTS.orders, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(orderData)
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to place order');
+            }
+            return await response.json();
+        } catch (error) {
+            console.error('Error:', error);
+            return null;
+        }
+    });
+
+    try {
+        const results = await Promise.all(orderPromises);
+        alert('Order placed successfully!');
+        clearCart();
+        closeOrderModal();
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Failed to place order. Please try again.');
+    }
+}
+
+// Helper function to get burger ID by name
+async function getBurgerIdByName(burgerName) {
+    try {
+        const response = await fetch(API_ENDPOINTS.burger);
+        const burgers = await response.json();
+        const burger = burgers.find(b => b.name === burgerName);
+        return burger ? burger.id : null;
+    } catch (error) {
+        console.error('Error fetching burgers:', error);
+        return null;
+    }
+}
+
 

@@ -68,55 +68,34 @@
         <div id="total">Total: Rs.0</div>
         <button class="payment-btn" id="buy-button" onclick="showOrderModal()">Place Order</button>
     </div>
-
-  <!-- Order Modal -->
-<div id="orderModal" class="modal">
-    <div class="modal-content">
-        <span class="close" onclick="closeOrderModal()">&times;</span>
-        <h2>Order Details</h2>
-        
-        <!-- Customer Information -->
-        <div class="mb-3">
-            <label for="customerName" class="form-label">Customer Name *</label>
-            <input type="text" id="customerName" class="form-control" placeholder="John Doe" required>
+    <div id="orderModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeOrderModal()">&times;</span>
+            <h2>Order Details</h2>
+            
+            <div class="mb-3">
+                <label for="customerName" class="form-label">Customer Name *</label>
+                <input type="text" id="customerName" class="form-control" required>
+            </div>
+            
+            <div class="mb-3">
+                <label for="orderDate" class="form-label">Order Date *</label>
+                <input type="date" id="orderDate" class="form-control" required>
+            </div>
+            
+            <div class="mb-3">
+                <label for="orderStatus" class="form-label">Order Status *</label>
+                <select id="orderStatus" class="form-control" required>
+                    <option value="pending">Pending</option>
+                    <option value="preparing">Preparing</option>
+                    <option value="ready">Ready</option>
+                    <option value="completed">Completed</option>
+                </select>
+            </div>
+            
+            <button class="btn btn-success w-100" onclick="submitOrder()">Confirm Order</button>
         </div>
-        
-        <!-- Order Date -->
-        <div class="mb-3">
-            <label for="orderDate" class="form-label">Order Date *</label>
-            <input type="date" id="orderDate" class="form-control" value="<?php echo date('Y-m-d'); ?>" required>
-        </div>
-        
-        <!-- Quantity -->
-        <div class="mb-3">
-            <label for="quantity" class="form-label">Quantity *</label>
-            <input type="number" id="quantity" class="form-control" min="1" value="1" required>
-        </div>
-        
-        <!-- Order Status -->
-        <div class="mb-3">
-            <label for="orderStatus" class="form-label">Order Status *</label>
-            <select id="orderStatus" class="form-control" required>
-                <option value="pending">Pending</option>
-                <option value="preparing">Preparing</option>
-                <option value="ready">Ready for Pickup</option>
-                <option value="completed">Completed</option>
-                <option value="cancelled">Cancelled</option>
-            </select>
-        </div>
-        
-        <!-- Burger Selection (if needed) -->
-        <div class="mb-3" id="burgerSelection" style="display:none;">
-            <label for="burgerId" class="form-label">Select Burger</label>
-            <select id="burgerId" class="form-control">
-                <!-- Options will be loaded dynamically -->
-            </select>
-        </div>
-        
-        <button class="btn btn-success w-100" onclick="submitOrder()">Confirm Order</button>
     </div>
-</div>
-
 <script>
 function openOrderModal(burgerId = null) {
     document.getElementById('orderModal').style.display = 'block';
