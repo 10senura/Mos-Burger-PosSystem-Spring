@@ -319,4 +319,46 @@ async function getBurgerIdByName(burgerName) {
     }
 }
 
+// Function to create burger rain effect
+function createBurgerRain() {
+    // Create container for the burger rain if it doesn't exist
+    let container = document.querySelector('.burger-rain-container');
+    if (!container) {
+        container = document.createElement('div');
+        container.className = 'burger-rain-container';
+        document.body.appendChild(container);
+    }
+    
+    // Create burger drops
+    const numberOfDrops = 20; // Adjust as needed
+    
+    for (let i = 0; i < numberOfDrops; i++) {
+        setTimeout(() => {
+            const drop = document.createElement('div');
+            drop.className = 'burger-drop';
+            
+            // Random positioning
+            const size = Math.random() * 20 + 20; // Random size between 20-40px
+            drop.style.width = size + 'px';
+            drop.style.height = size + 'px';
+            drop.style.left = Math.random() * 100 + '%';
+            
+            // Random animation duration
+            const duration = Math.random() * 3 + 2; // 2-5 seconds
+            drop.style.animationDuration = duration + 's';
+            
+            // Add to container
+            container.appendChild(drop);
+            
+            // Remove after animation completes
+            setTimeout(() => {
+                drop.remove();
+            }, duration * 1000);
+        }, i * 200); // Stagger the creation of drops
+    }
+}
 
+// Function to trigger the burger rain
+function triggerBurgerRain() {
+    createBurgerRain();
+}

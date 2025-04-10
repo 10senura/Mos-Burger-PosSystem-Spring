@@ -3,7 +3,6 @@ function validateForm() {
     var username = document.getElementById("username").value;
     var password = document.getElementById("password").value;
 
-    // Check if username and password match
     if (username === "senura" && password === "admin123") {
         window.location.href = "pos.html";
     } else {

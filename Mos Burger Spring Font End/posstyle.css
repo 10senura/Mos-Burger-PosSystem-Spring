@@ -287,3 +287,150 @@ body {
         margin-top: 20px;
     }
 }
+
+
+.sidebar {
+    width: 60px; /* Default collapsed width */
+    height: 100vh;
+    background-color: #333;
+    position: fixed;
+    transition: width 0.3s ease;
+    overflow: hidden;
+    z-index: 1000;
+}
+
+.sidebar:hover {
+    width: 200px; /* Expanded width on hover */
+}
+
+.logo {
+    padding: 15px;
+    text-align: center;
+}
+
+.logo img {
+    max-width: 100%;
+    height: auto;
+}
+
+.menu {
+    margin-top: 20px;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    color: white;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.menu-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.menu-item i {
+    font-size: 20px;
+    min-width: 30px; /* Fixed width for icons */
+}
+
+.menu-text {
+    margin-left: 10px;
+    opacity: 0; /* Hidden by default */
+    transition: opacity 0.3s ease;
+}
+
+.sidebar:hover .menu-text {
+    opacity: 1; /* Visible when sidebar is expanded */
+}
+
+/* Adjust main content to account for sidebar */
+.main {
+    margin-left: 60px;
+    transition: margin-left 0.3s ease;
+}
+
+/* Optional: adjust main content when sidebar expands */
+.sidebar:hover + .main {
+    margin-left: 200px;
+}
+/* Burger Rain Animation */
+.burger-rain-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Allows clicking through the rain */
+    z-index: 999;
+    overflow: hidden;
+}
+
+.burger-drop {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background-image: url('img/burger-icon.png'); /* Replace with your burger icon */
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.7;
+    animation: falling linear infinite;
+}
+
+@keyframes falling {
+    0% {
+        transform: translateY(-100px) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0.3;
+    }
+}
+.burger-drop {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #f8a100; /* Bun color */
+    box-shadow: 0 5px 0 #5d4037, /* Patty */
+                0 10px 0 #8bc34a, /* Lettuce */
+                0 15px 0 #f44336; /* Tomato */
+    opacity: 0.7;
+    animation: falling linear infinite;
+}
+/* Burger Rain Animation */
+.burger-rain-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Allows clicking through the rain */
+    z-index: 999;
+    overflow: hidden;
+}
+
+.burger-drop {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    background-image: url('img/burger-icon.png'); 
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.7;
+    animation: falling linear infinite;
+}
+
+@keyframes falling {
+    0% {
+        transform: translateY(-100px) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0.3;
+    }
+}
