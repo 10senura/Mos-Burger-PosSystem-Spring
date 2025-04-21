@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="report.css"> 
+    <title>Mister Burger Shop - Report Generator</title>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">MISTER BURGER SHOP</div>
+            <p>Colombo Branch</p>
+        </header>
+        
+        <h1>Item Sales Report Generator</h1>
+        
+        <div class="form-group">
+            <label for="reportType">Report Type:</label>
+            <select id="reportType">
+                <option value="daily">Daily Sales Report</option>
+                <option value="weekly">Weekly Sales Report</option>
+                <option value="monthly">Monthly Sales Report</option>
+                <option value="itemSpecific">Item Specific Report</option>
+            </select>
+        </div>
+        
+        <div class="form-group" id="dateContainer">
+            <label for="reportDate">Date:</label>
+            <input type="date" id="reportDate">
+        </div>
+        
+        <div class="form-group hidden" id="weekContainer">
+            <label for="weekStart">Week Start Date:</label>
+            <input type="date" id="weekStart">
+        </div>
+        
+        <div class="form-group hidden" id="monthContainer">
+            <label for="reportMonth">Month:</label>
+            <input type="month" id="reportMonth">
+        </div>
+        
+        <div class="form-group hidden" id="itemContainer">
+            <label for="itemSelect">Select Item:</label>
+            <select id="itemSelect">
+                <option value="classic">Classic Burger</option>
+                <option value="cheese">Cheese Burger</option>
+                <option value="chicken">Chicken Burger</option>
+                <option value="veggie">Veggie Burger</option>
+                <option value="spicy">Spicy Burger</option>
+                <option value="pasta1">Pasta Carbonara</option>
+                <option value="pasta2">Pasta Bolognese</option>
+                <option value="pasta3">Pasta Alfredo</option>
+            </select>
+        </div>
+        
+        <button id="generateReport">Generate Report</button>
+        
+        <div id="reportDisplay">
+            <div class="report-header">
+                <h2>MISTER BURGER SHOP</h2>
+                <p>Colombo Branch</p>
+                <h3 id="reportTitle">Sales Report</h3>
+            </div>
+            
+            <div class="report-info">
+                <p><strong>Report Type:</strong> <span id="displayReportType"></span></p>
+                <p><strong>Period:</strong> <span id="displayPeriod"></span></p>
+                <p><strong>Generated On:</strong> <span id="generatedDate"></span></p>
+            </div>
+            
+            <table id="reportTable">
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Quantity Sold</th>
+                        <th>Revenue (Rs.)</th>
+                        <th>% of Total</th>
+                    </tr>
+                </thead>
+                <tbody id="reportData">
+                    <!-- Report data will be inserted here -->
+                </tbody>
+                <tfoot id="reportFooter">
+                    <!-- Total row will be inserted here -->
+                </tfoot>
+            </table>
+            
+            <div class="report-actions">
+                <button id="downloadReport">Download Report</button>
+                <button id="printReport">Print Report</button>
+            </div>
+        </div>
+    </div>
+<script src="report_page.js"> </script>
+</body>
+</html>

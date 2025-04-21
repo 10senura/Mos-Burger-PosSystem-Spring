@@ -273,7 +273,7 @@ async function submitOrder() {
             order_date: orderDate,
             order_status: orderStatus,
             quantity: item.quantity,
-            burger_id: await getBurgerIdByName(item.name) // You need to implement this function
+            burger_id: await getBurgerIdByName(item.name) 
         };
 
         try {
@@ -306,7 +306,6 @@ async function submitOrder() {
     }
 }
 
-// Helper function to get burger ID by name
 async function getBurgerIdByName(burgerName) {
     try {
         const response = await fetch(API_ENDPOINTS.burger);
@@ -319,9 +318,7 @@ async function getBurgerIdByName(burgerName) {
     }
 }
 
-// Function to create burger rain effect
 function createBurgerRain() {
-    // Create container for the burger rain if it doesn't exist
     let container = document.querySelector('.burger-rain-container');
     if (!container) {
         container = document.createElement('div');
@@ -329,36 +326,56 @@ function createBurgerRain() {
         document.body.appendChild(container);
     }
     
-    // Create burger drops
-    const numberOfDrops = 20; // Adjust as needed
+    const numberOfDrops = 20; 
     
     for (let i = 0; i < numberOfDrops; i++) {
         setTimeout(() => {
             const drop = document.createElement('div');
             drop.className = 'burger-drop';
             
-            // Random positioning
-            const size = Math.random() * 20 + 20; // Random size between 20-40px
+            const size = Math.random() * 20 + 20; 
             drop.style.width = size + 'px';
             drop.style.height = size + 'px';
             drop.style.left = Math.random() * 100 + '%';
             
-            // Random animation duration
-            const duration = Math.random() * 3 + 2; // 2-5 seconds
+            const duration = Math.random() * 3 + 2; 
             drop.style.animationDuration = duration + 's';
             
-            // Add to container
             container.appendChild(drop);
             
-            // Remove after animation completes
             setTimeout(() => {
                 drop.remove();
             }, duration * 1000);
-        }, i * 200); // Stagger the creation of drops
+        }, i * 200); 
     }
 }
 
-// Function to trigger the burger rain
 function triggerBurgerRain() {
     createBurgerRain();
 }
+
+function logout(redirectUrl = '/login') {
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('userInfo');
+    sessionStorage.removeItem('authToken');
+    sessionStorage.removeItem('userInfo');
+    
+    document.cookie = 'authToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    
+    fetch('/api/auth/logout', {
+      method: 'POST',
+      credentials: 'include', 
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(response => {
+      window.location.href = redirectUrl;
+    })
+    .catch(error => {
+      console.error('Logout error:', error);
+      window.location.href = redirectUrl;
+    });
+  }
+  
+  
