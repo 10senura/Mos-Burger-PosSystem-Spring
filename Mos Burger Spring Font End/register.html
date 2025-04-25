@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Burger POS Registration</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5a742, #e24329);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        /* Burger ingredients falling animation */
+        .burger-ingredients {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+        }
+        
+        .ingredient {
+            position: absolute;
+            top: -100px;
+            opacity: 0.5;
+            z-index: 1;
+            animation: fall linear infinite;
+        }
+        
+        /* Burger bun top */
+        .ingredient:nth-child(3n+1) {
+            width: 60px;
+            height: 30px;
+            background: #f8c471;
+            border-radius: 30px 30px 5px 5px;
+        }
+        
+        /* Burger patty */
+        .ingredient:nth-child(3n+2) {
+            width: 50px;
+            height: 10px;
+            background: #873600;
+            border-radius: 5px;
+        }
+        
+        /* Lettuce */
+        .ingredient:nth-child(3n+3) {
+            width: 55px;
+            height: 8px;
+            background: #2ecc71;
+            border-radius: 2px;
+            z-index: 0;
+        }
+        
+        /* Tomato */
+        .ingredient:nth-child(3n+4) {
+            width: 40px;
+            height: 40px;
+            background: #e74c3c;
+            border-radius: 50%;
+        }
+        
+        /* Cheese */
+        .ingredient:nth-child(3n+5) {
+            width: 50px;
+            height: 5px;
+            background: #f1c40f;
+            border-radius: 2px;
+        }
+        
+        /* Burger bun bottom */
+        .ingredient:nth-child(3n) {
+            width: 60px;
+            height: 20px;
+            background: #f8c471;
+            border-radius: 5px 5px 30px 30px;
+        }
+        
+        @keyframes fall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.5;
+            }
+            90% {
+                opacity: 0.5;
+            }
+            100% {
+                transform: translateY(calc(100vh + 100px)) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        /* Main registration container */
+        .register-container {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            width: 400px;
+            max-width: 90%;
+            position: relative;
+            z-index: 10;
+            overflow: hidden;
+            transform: translateY(50px);
+            opacity: 0;
+            animation: slideUp 1s forwards 0.5s;
+        }
+        
+        /* Sizzle effect */
+        .register-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to right,
+                rgba(255, 255, 255, 0),
+                rgba(255, 255, 255, 0.6),
+                rgba(255, 255, 255, 0)
+            );
+            transform: rotate(45deg);
+            animation: sizzle 4s infinite;
+            z-index: -1;
+        }
+        
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes sizzle {
+            0% {
+                transform: rotate(45deg) translateX(-150%);
+            }
+            100% {
+                transform: rotate(45deg) translateX(150%);
+            }
+        }
+        
+        /* Logo and title animations */
+        .burger-icon {
+            display: block;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 20px;
+            transform-origin: center bottom;
+            opacity: 0;
+            animation: assembleAndBounce 3s forwards;
+        }
+        
+        @keyframes assembleAndBounce {
+            0% { 
+                transform: scale(0);
+                opacity: 0;
+            }
+            20% { 
+                transform: scale(1.2);
+                opacity: 1;
+            }
+            30% { 
+                transform: scale(1);
+                opacity: 1;
+            }
+            40% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+            60% { transform: translateY(0); }
+            70% { transform: translateY(-10px); }
+            80%, 100% { transform: translateY(0); }
+        }
+        
+        h2 {
+            color: #e24329;
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+            opacity: 0;
+            animation: fadeIn 0.6s forwards 1.2s;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 3px;
+            background: #f5a742;
+            animation: expandLine 0.6s forwards 1.8s;
+        }
+        
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+        
+        @keyframes expandLine {
+            to {
+                width: 60%;
+            }
+        }
+        
+        /* Form animations */
+        form div {
+            margin-bottom: 25px;
+            position: relative;
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+        
+        form div:nth-child(1) {
+            animation: slideInRight 0.6s forwards 1.4s;
+        }
+        
+        form div:nth-child(2) {
+            animation: slideInRight 0.6s forwards 1.6s;
+        }
+        
+        form div:nth-child(3) {
+            animation: slideInRight 0.6s forwards 1.8s;
+        }
+        
+        form div:nth-child(4) {
+            animation: slideInRight 0.6s forwards 2.0s;
+        }
+        
+        form div:nth-child(5) {
+            animation: slideInRight 0.6s forwards 2.2s;
+        }
+        
+        @keyframes slideInRight {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s;
+            background: rgba(255, 255, 255, 0.9);
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: #f5a742;
+            box-shadow: 0 0 0 3px rgba(245, 167, 66, 0.3);
+        }
+        
+        input:focus + .input-animation, select:focus + .input-animation {
+            transform: scaleX(1);
+        }
+        
+        .input-animation {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #f5a742, #e24329);
+            transform: scaleX(0);
+            transition: transform 0.3s;
+            transform-origin: left;
+        }
+        
+        button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(90deg, #f5a742, #e24329);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        
+        button span {
+            position: relative;
+            z-index: 1;
+        }
+        
+        button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: 0.5s;
+        }
+        
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        button:hover::before {
+            left: 100%;
+        }
+        
+        button:active {
+            transform: translateY(0);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+            opacity: 0;
+            animation: fadeIn 0.6s forwards 2.4s;
+        }
+        
+        .login-link a {
+            color: #e24329;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .login-link a:hover {
+            color: #f5a742;
+            text-decoration: underline;
+        }
+        
+        /* Loading animation */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #f5a742, #e24329);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 0.5s, visibility 0.5s;
+        }
+        
+        .loading.hide {
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        /* Burger assembly loading animation */
+        .burger-loader {
+            position: relative;
+            height: 150px;
+            width: 150px;
+        }
+        
+        .burger-part {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            border-radius: 10px;
+            opacity: 0;
+        }
+        
+        .bun-top {
+            height: 40px;
+            top: 0;
+            background: #f8c471;
+            border-radius: 30px 30px 5px 5px;
+            animation: dropIn 0.5s forwards;
+            z-index: 5;
+        }
+        
+        .lettuce {
+            height: 15px;
+            top: 40px;
+            background: #2ecc71;
+            border-radius: 3px;
+            animation: dropIn 0.5s forwards 0.3s;
+            z-index: 4;
+        }
+        
+        .cheese {
+            height: 10px;
+            top: 55px;
+            background: #f1c40f;
+            border-radius: 3px;
+            animation: dropIn 0.5s forwards 0.6s;
+            z-index: 3;
+        }
+        
+        .patty {
+            height: 25px;
+            top: 65px;
+            background: #873600;
+            border-radius: 5px;
+            animation: dropIn 0.5s forwards 0.9s;
+            z-index: 2;
+        }
+        
+        .tomato {
+            height: 15px;
+            top: 90px;
+            background: #e74c3c;
+            border-radius: 3px;
+            animation: dropIn 0.5s forwards 1.2s;
+            z-index: 1;
+        }
+        
+        .bun-bottom {
+            height: 30px;
+            top: 105px;
+            background: #f8c471;
+            border-radius: 5px 5px 30px 30px;
+            animation: dropIn 0.5s forwards 1.5s;
+            z-index: 0;
+        }
+        
+        @keyframes dropIn {
+            0% {
+                transform: translateX(-50%) translateY(-50px);
+                opacity: 0;
+            }
+            60% {
+                transform: translateX(-50%) translateY(10px);
+                opacity: 1;
+            }
+            80% {
+                transform: translateX(-50%) translateY(-5px);
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(-50%) translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        /* Add shake animation for form validation */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+            20%, 40%, 60%, 80% { transform: translateX(10px); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading animation -->
+    <div class="loading">
+        <div class="burger-loader">
+            <div class="burger-part bun-top"></div>
+            <div class="burger-part lettuce"></div>
+            <div class="burger-part cheese"></div>
+            <div class="burger-part patty"></div>
+            <div class="burger-part tomato"></div>
+            <div class="burger-part bun-bottom"></div>
+        </div>
+    </div>
+    
+    <!-- Burger ingredients falling animation -->
+    <div class="burger-ingredients" id="burgerIngredients">
+        <!-- Will be populated via JavaScript -->
+    </div>
+    
+    <!-- Registration container -->
+    <div class="register-container">
+        <img src="/api/placeholder/100/100" alt="Burger Icon" class="burger-icon">
+        <h2>Create New Account</h2>
+        <form id="registerForm">
+            <div>
+                <label for="fullname">Full Name</label>
+                <input type="text" id="fullname" name="fullname" required>
+                <div class="input-animation"></div>
+            </div>
+            <div>
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+                <div class="input-animation"></div>
+            </div>
+            <div>
+                <label for="role">Role</label>
+                <select id="role" name="role" required>
+                    <option value="">Select a role</option>
+                    <option value="manager">Manager</option>
+                    <option value="cashier">Cashier</option>
+                    <option value="kitchen">Kitchen Staff</option>
+                </select>
+                <div class="input-animation"></div>
+            </div>
+            <div>
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+                <div class="input-animation"></div>
+            </div>
+            <div>
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" required>
+                <div class="input-animation"></div>
+            </div>
+            <div>
+                <button type="button" onclick="registerUser()"><span>Register</span></button>
+            </div>
+        </form>
+        <div class="login-link">
+            Already have an account? <a href="index.html">Login here</a>
+        </div>
+    </div>
+    
+    <script>
+        // Create falling burger ingredients
+        function createIngredients() {
+            const container = document.getElementById('burgerIngredients');
+            const ingredientCount = 30;
+            
+            for (let i = 0; i < ingredientCount; i++) {
+                const ingredient = document.createElement('div');
+                ingredient.className = 'ingredient';
+                
+                // Random positioning
+                const leftPos = Math.random() * 100;
+                ingredient.style.left = `${leftPos}%`;
+                
+                // Random animation duration between 10-20 seconds
+                const duration = Math.random() * 10 + 10;
+                ingredient.style.animationDuration = `${duration}s`;
+                
+                // Random delay so they don't all fall at once
+                const delay = Math.random() * 15;
+                ingredient.style.animationDelay = `${delay}s`;
+                
+                container.appendChild(ingredient);
+            }
+        }
+        
+        // Show loading animation on page load
+        window.addEventListener('load', () => {
+            createIngredients();
+            
+            // Hide loading screen after burger assembly animation completes
+            setTimeout(() => {
+                document.querySelector('.loading').classList.add('hide');
+            }, 3000); // 3 seconds is enough for all burger parts to drop in
+        });
+        
+        // Registration function
+        function registerUser() {
+            var fullname = document.getElementById("fullname").value;
+            var username = document.getElementById("username").value;
+            var role = document.getElementById("role").value;
+            var password = document.getElementById("password").value;
+            var confirmPassword = document.getElementById("confirmPassword").value;
+            
+            // Basic form validation
+            if (!fullname || !username || !role || !password || !confirmPassword) {
+                alert("Please fill in all fields");
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                alert("Passwords do not match");
+                return;
+            }
+            
+            // Start loading animation
+            document.querySelector('.loading').classList.remove('hide');
+            
+            // Reset burger loader animation by removing and recreating elements
+            const burgerLoader = document.querySelector('.burger-loader');
+            burgerLoader.innerHTML = `
+                <div class="burger-part bun-top"></div>
+                <div class="burger-part lettuce"></div>
+                <div class="burger-part cheese"></div>
+                <div class="burger-part patty"></div>
+                <div class="burger-part tomato"></div>
+                <div class="burger-part bun-bottom"></div>
+            `;
+            
+            // Add a delay to simulate processing
+            setTimeout(() => {
+                // Here you would typically send the registration data to a server
+                // For now, we'll just simulate a successful registration
+                
+                // In a real application, you would store the user data in a database
+                // For demonstration, we'll just store it in localStorage
+                const user = {
+                    fullname: fullname,
+                    username: username,
+                    role: role,
+                    password: password // In a real app, never store passwords in plain text!
+                };
+                
+                // Get existing users or initialize empty array
+                let users = JSON.parse(localStorage.getItem('burgerPosUsers') || '[]');
+                
+                // Check if username already exists
+                const userExists = users.some(u => u.username === username);
+                
+                if (userExists) {
+                    // Hide loading animation
+                    document.querySelector('.loading').classList.add('hide');
+                    
+                    // Shake effect for the form on error
+                    const registerContainer = document.querySelector('.register-container');
+                    registerContainer.style.animation = 'shake 0.5s';
+                    
+                    // Reset animation
+                    setTimeout(() => {
+                        registerContainer.style.animation = '';
+                    }, 500);
+                    
+                    alert("Username already exists. Please choose another username.");
+                } else {
+                    // Add new user
+                    users.push(user);
+                    
+                    // Save back to localStorage
+                    localStorage.setItem('burgerPosUsers', JSON.stringify(users));
+                    
+                    // Redirect to login page after successful registration
+                    window.location.href = "index.html?registered=true";
+                }
+            }, 2500); // Allow time for burger assembly animation
+        }
+        
+        // Add focus effects for input fields
+        const inputs = document.querySelectorAll('input, select');
+        inputs.forEach(input => {
+            input.addEventListener('focus', () => {
+                input.previousElementSibling.style.color = '#f5a742';
+            });
+            
+            input.addEventListener('blur', () => {
+                input.previousElementSibling.style.color = '#333';
+            });
+        });
+    </script>
+</body>
+</html>
